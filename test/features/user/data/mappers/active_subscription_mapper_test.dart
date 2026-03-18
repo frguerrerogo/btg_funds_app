@@ -1,5 +1,3 @@
-// test/features/funds/data/mappers/active_subscription_mapper_test.dart
-
 import 'package:btg_funds_app/features/user/data/data.dart'
     show ActiveSubscriptionDto, ActiveSubscriptionMapper;
 import 'package:btg_funds_app/features/user/domain/domain.dart' show ActiveSubscriptionEntity;

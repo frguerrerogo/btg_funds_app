@@ -1,9 +1,7 @@
-// test/features/user/data/mappers/user_mapper_test.dart
-
 import 'package:btg_funds_app/features/user/data/data.dart'
     show ActiveSubscriptionDto, ActiveSubscriptionMapper, UserDto, UserMapper;
-import 'package:btg_funds_app/features/user/domain/domain.dart' show ActiveSubscriptionEntity;
-import 'package:btg_funds_app/features/user/domain/entities/user_entity.dart';
+import 'package:btg_funds_app/features/user/domain/domain.dart'
+    show ActiveSubscriptionEntity, UserEntity;
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
