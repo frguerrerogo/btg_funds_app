@@ -10,8 +10,7 @@ class ValidateBalanceUseCase {
   ///
   /// Requires a [_repository] implementation to fetch current user data
   /// for balance validation.
-  const ValidateBalanceUseCase(this._repository);
-
+  const ValidateBalanceUseCase(UserRepository repository) : _repository = repository;
   final UserRepository _repository;
 
   /// Validates whether the user has sufficient balance for the given amount.

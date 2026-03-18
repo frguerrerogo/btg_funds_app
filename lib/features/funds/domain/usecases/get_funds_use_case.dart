@@ -10,7 +10,7 @@ class GetFundsUseCase {
   ///
   /// [_repository] provides the data access contract for retrieving fund information
   /// from the underlying data source.
-  const GetFundsUseCase(this._repository);
+  const GetFundsUseCase(FundsRepository repository) : _repository = repository;
 
   final FundsRepository _repository;
 

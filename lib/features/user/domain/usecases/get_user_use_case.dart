@@ -9,8 +9,7 @@ class GetUserUseCase {
   /// Creates an instance of [GetUserUseCase].
   ///
   /// Requires a [_repository] implementation to fetch the current user profile.
-  const GetUserUseCase(this._repository);
-
+  const GetUserUseCase(UserRepository repository) : _repository = repository;
   final UserRepository _repository;
 
   /// Retrieves the current user's profile and account information.
