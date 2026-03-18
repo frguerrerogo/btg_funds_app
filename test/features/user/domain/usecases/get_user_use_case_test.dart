@@ -25,7 +25,6 @@ void main() {
     id: '1',
     name: 'BTG User',
     balance: 500000,
-    subscribedFundIds: [],
   );
 
   setUp(() {
@@ -65,7 +64,7 @@ void main() {
       final result = await sut.execute();
 
       // assert
-      expect(result.subscribedFundIds, isEmpty);
+      expect(result.activeSubscriptions, isEmpty);
     });
   });
 }

@@ -25,7 +25,6 @@ void main() {
     id: '1',
     name: 'BTG User',
     balance: 500000,
-    subscribedFundIds: [],
   );
 
   setUp(() {

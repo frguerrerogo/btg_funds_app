@@ -5,11 +5,10 @@
 /// logic contracts and data structures for user accounts and subscriptions.
 library;
 
-// Entities
-export 'entities/active_subscription_entity.dart';
-export 'entities/user_entity.dart';
+// Datasources
+// Mappers
+// Models
+export 'models/active_subscription_dto.dart';
+export 'models/user_dto.dart';
+
 // Repositories
-export 'repositories/user_repository.dart';
-// Usecases
-export 'usecases/get_user_use_case.dart';
-export 'usecases/validate_balance_use_case.dart';
