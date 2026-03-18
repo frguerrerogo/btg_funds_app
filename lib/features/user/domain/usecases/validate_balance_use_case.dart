@@ -1,4 +1,4 @@
-import 'package:btg_funds_app/features/user/domain/repositories/user_repository.dart';
+import 'package:btg_funds_app/features/user/domain/domain.dart' show UserRepository;
 
 /// Use case that validates whether the user has sufficient balance for a transaction.
 ///

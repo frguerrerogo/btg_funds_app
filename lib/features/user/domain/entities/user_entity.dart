@@ -1,4 +1,4 @@
-import 'package:btg_funds_app/features/user/domain/domain.dart';
+import 'package:btg_funds_app/features/user/domain/domain.dart' show ActiveSubscriptionEntity;
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user_entity.freezed.dart';

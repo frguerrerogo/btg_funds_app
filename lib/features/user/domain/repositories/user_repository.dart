@@ -1,4 +1,4 @@
-import 'package:btg_funds_app/features/user/domain/domain.dart';
+import 'package:btg_funds_app/features/user/domain/domain.dart' show UserEntity;
 
 /// Domain repository interface for user data access and management.
 ///

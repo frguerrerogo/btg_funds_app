@@ -1,6 +1,5 @@
-import 'package:btg_funds_app/core/shared/mapper.dart' show Mapper;
-import 'package:btg_funds_app/features/user/data/models/active_subscription_dto.dart'
-    show ActiveSubscriptionDto;
+import 'package:btg_funds_app/core/core.dart' show Mapper;
+import 'package:btg_funds_app/features/user/data/data.dart' show ActiveSubscriptionDto;
 import 'package:btg_funds_app/features/user/domain/domain.dart' show ActiveSubscriptionEntity;
 
 /// Maps between [ActiveSubscriptionEntity] and [ActiveSubscriptionDto].

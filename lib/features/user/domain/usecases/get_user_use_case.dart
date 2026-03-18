@@ -1,5 +1,4 @@
-import 'package:btg_funds_app/features/user/domain/entities/user_entity.dart';
-import 'package:btg_funds_app/features/user/domain/repositories/user_repository.dart';
+import 'package:btg_funds_app/features/user/domain/domain.dart' show UserEntity, UserRepository;
 
 /// Use case that retrieves the current user's profile and account information.
 ///
