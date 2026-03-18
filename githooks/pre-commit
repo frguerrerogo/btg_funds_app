@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# Check if fvm is available
+if command -v fvm &> /dev/null; then
+  FVM_PREFIX="fvm "
+else
+  FVM_PREFIX=""
+fi
+
+echo "🔍 Running flutter analyze..."
+${FVM_PREFIX}flutter analyze
+if [ $? -ne 0 ]; then
+  echo "❌ Analyze failed. Commit aborted."
+  exit 1
+fi
+
+echo "🧪 Running flutter test..."
+${FVM_PREFIX}flutter test --no-pub
+if [ $? -ne 0 ]; then
+  echo "❌ Tests failed. Commit aborted."
+  exit 1
+fi
+
+echo "✅ Pre-commit checks passed."
+exit 0

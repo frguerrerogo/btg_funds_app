@@ -1,3 +1,17 @@
 {
-    "dart.flutterSdkPath": "C:\\Flutter\\posts_app\\.fvm\\flutter_sdk"
+  "dart.flutterSdkPath": ".fvm/versions/3.38.7",
+  "editor.rulers": [
+    100
+  ],
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit"
+  },
+  "files.trimTrailingWhitespace": true,
+  "[dart]": {
+    "editor.defaultFormatter": "Dart-Code.dart-code",
+    "editor.formatOnSave": true
+  },
+  "dart.lineLength": 100,
+  "dart.flutterHotReloadOnSave": "never"
 }

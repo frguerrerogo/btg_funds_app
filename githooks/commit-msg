@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Check if fvm is available
+if command -v fvm &> /dev/null; then
+  FVM_PREFIX="fvm "
+else
+  FVM_PREFIX=""
+fi
+
+${FVM_PREFIX}dart tool/commit_lint.dart "$1"
+if [ $? -ne 0 ]; then
+  exit 1
+fi
