@@ -4,10 +4,13 @@ import 'package:btg_funds_app/features/funds/domain/domain.dart'
     show CancelFundUseCase, FundEntity, GetFundsUseCase, SubscribeFundUseCase;
 import 'package:btg_funds_app/features/user/presentation/presentation.dart'
     show userControllerProvider;
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'funds_controller.g.dart';
 
 /// Controller that manages [List<FundEntity>] state for the funds feature.
-class FundsController extends AsyncNotifier<List<FundEntity>> {
+@riverpod
+class FundsController extends _$FundsController {
   late GetFundsUseCase _getFundsUseCase;
   late SubscribeFundUseCase _subscribeFundUseCase;
   late CancelFundUseCase _cancelFundUseCase;
@@ -23,11 +26,14 @@ class FundsController extends AsyncNotifier<List<FundEntity>> {
 
   /// Subscribes the user to a fund with the given [fundId].
   /// Refreshes the user balance and updates the funds list.
-  Future<void> subscribeFund(String fundId) async {
+  Future<void> subscribeFund({
+    required String fundId,
+    required String fundName,
+    required double amount,
+  }) async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
       await _subscribeFundUseCase.execute(fundId: fundId);
-      // Refresh user balance
       await ref.read(userControllerProvider.notifier).refreshUser();
       return _getFundsUseCase.execute();
     });
@@ -39,14 +45,8 @@ class FundsController extends AsyncNotifier<List<FundEntity>> {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
       await _cancelFundUseCase.execute(fundId: fundId);
-      // Refresh user balance
       await ref.read(userControllerProvider.notifier).refreshUser();
       return _getFundsUseCase.execute();
     });
   }
 }
-
-/// Provider for [FundsController].
-final fundsControllerProvider = AsyncNotifierProvider<FundsController, List<FundEntity>>(
-  FundsController.new,
-);
