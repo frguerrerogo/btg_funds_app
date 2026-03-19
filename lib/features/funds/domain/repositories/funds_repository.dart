@@ -1,33 +1,17 @@
 import 'package:btg_funds_app/features/funds/domain/domain.dart' show FundEntity;
 
-/// Defines the domain contract for accessing and managing fund data.
-///
-/// This abstract repository interface encapsulates all operations related to
-/// fund management, including retrieval of available funds and user subscription
-/// actions. Implementations of this interface are responsible for providing access
-/// to fund information and handling subscription state changes.
+/// Repository interface for accessing and managing fund data.
+/// Defines the domain contract for fund retrieval and subscription management.
 abstract class FundsRepository {
-  /// Retrieves all funds currently available in the investment platform.
-  ///
-  /// Returns a list of [FundEntity] objects representing all funds
-  /// that users can browse and potentially subscribe to.
+  /// Retrieves all funds available in the investment platform. Returns a list of [FundEntity] representing all available funds.
   Future<List<FundEntity>> getFunds();
 
-  /// Retrieves a specific fund by its unique identifier.
-  ///
-  /// [id] is the unique identifier of the fund to retrieve.
-  /// Returns a [FundEntity] matching the provided [id].
+  /// Retrieves the fund identified by [id]. Returns the [FundEntity] matching the provided identifier.
   Future<FundEntity> getFundById(String id);
 
-  /// Subscribes the current user to a fund with the specified identifier.
-  ///
-  /// [fundId] is the unique identifier of the fund to subscribe to.
-  /// Returns the updated [FundEntity] reflecting the active subscription status.
+  /// Subscribes the current user to the fund identified by [fundId]. Returns the [FundEntity] reflecting the active subscription status.
   Future<FundEntity> subscribeFund(String fundId);
 
-  /// Cancels the current user's subscription to a fund.
-  ///
-  /// [fundId] is the unique identifier of the fund to unsubscribe from.
-  /// Returns the updated [FundEntity] reflecting the cancelled subscription status.
+  /// Cancels the user's subscription to the fund identified by [fundId]. Returns the [FundEntity] reflecting the cancelled subscription status.
   Future<FundEntity> cancelFund(String fundId);
 }

@@ -2,20 +2,13 @@ import 'package:btg_funds_app/features/user/domain/domain.dart' show UserEntity,
 
 /// Use case that retrieves the current user's profile and account information.
 ///
-/// Encapsulates the business logic for fetching the authenticated user's details,
-/// including balance and fund subscriptions. It delegates data access to the
-/// injected repository.
+/// Depends on [UserRepository] for user data retrieval.
 class GetUserUseCase {
-  /// Creates an instance of [GetUserUseCase].
-  ///
-  /// Requires a [_repository] implementation to fetch the current user profile.
+  /// Creates a [GetUserUseCase] with [repository].
   const GetUserUseCase(UserRepository repository) : _repository = repository;
   final UserRepository _repository;
 
-  /// Retrieves the current user's profile and account information.
-  ///
-  /// Fetches the authenticated user from the repository, returning a [UserEntity]
-  /// with their complete profile including balance and subscribed funds.
+  /// Retrieves the current user's profile and account information. Returns a [UserEntity] with their complete account details and subscriptions.
   Future<UserEntity> execute() async {
     return _repository.getUser();
   }

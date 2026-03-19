@@ -2,22 +2,13 @@ import 'package:btg_funds_app/features/user/domain/domain.dart' show UserReposit
 
 /// Use case that validates whether the user has sufficient balance for a transaction.
 ///
-/// Encapsulates the business logic for checking fund availability before
-/// allowing subscription or other balance-dependent operations. It retrieves
-/// the current user profile from the repository and verifies the balance constraint.
+/// Depends on [UserRepository] for user balance information.
 class ValidateBalanceUseCase {
-  /// Creates an instance of [ValidateBalanceUseCase].
-  ///
-  /// Requires a [_repository] implementation to fetch current user data
-  /// for balance validation.
+  /// Creates a [ValidateBalanceUseCase] with [repository].
   const ValidateBalanceUseCase(UserRepository repository) : _repository = repository;
   final UserRepository _repository;
 
-  /// Validates whether the user has sufficient balance for the given amount.
-  ///
-  /// Fetches the current user profile and checks if their balance is sufficient
-  /// to cover the requested [amount]. Returns `true` if the user has enough
-  /// balance; `false` otherwise.
+  /// Validates whether the user's balance is sufficient for the amount specified by [amount]. Returns `true` if balance is sufficient, `false` otherwise.
   Future<bool> execute({required double amount}) async {
     final user = await _repository.getUser();
     return user.hasEnoughBalance(amount);
