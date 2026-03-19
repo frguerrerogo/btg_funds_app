@@ -3,24 +3,17 @@ import 'package:btg_funds_app/features/funds/domain/domain.dart'
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-/// Mock implementation of [FundsRepository] used for testing purposes.
-///
-/// This test double allows tests to control the behavior of the repository
-/// without accessing actual data sources.
+/// Mock implementation of [FundsRepository] for testing purposes.
 class MockFundsRepository extends Mock implements FundsRepository {}
 
 void main() {
-  /// The system under test: [GetFundsUseCase] instance being tested.
+  /// The system under test: [GetFundsUseCase].
   late GetFundsUseCase sut;
 
-  /// Mock instance of [FundsRepository] used to control repository behavior during tests.
+  /// Mock of [FundsRepository] injected into [sut].
   late MockFundsRepository mockFundsRepository;
 
-  /// Test data representing a realistic set of available funds in the investment platform.
-  ///
-  /// This fixture includes five funds across both FPV and FIC categories with
-  /// varying minimum investment amounts, representing a typical product catalog
-  /// scenario for fund retrieval tests.
+  /// Base [List<FundEntity>] fixture with 5 funds across FPV and FIC categories with minimum amounts from 50,000 to 250,000 COP.
   final tFunds = [
     const FundEntity(
       id: '1',

@@ -12,15 +12,23 @@ import 'package:btg_funds_app/features/user/domain/domain.dart' show UserEntity,
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
+/// Mock implementation of [FundsRepository] for testing purposes.
 class MockFundsRepository extends Mock implements FundsRepository {}
 
+/// Mock implementation of [UserRepository] for testing purposes.
 class MockUserRepository extends Mock implements UserRepository {}
 
 void main() {
+  /// The system under test: [SubscribeFundUseCase].
   late SubscribeFundUseCase sut;
+
+  /// Mock of [FundsRepository] injected into [sut].
   late MockFundsRepository mockFundsRepository;
+
+  /// Mock of [UserRepository] injected into [sut].
   late MockUserRepository mockUserRepository;
 
+  /// Base [FundEntity] fixture with minimum amount of 75,000 COP and FPV category.
   const tFund = FundEntity(
     id: '1',
     name: 'FPV_BTG_PACTUAL_RECAUDADORA',
@@ -28,12 +36,14 @@ void main() {
     category: FundCategory.fpv,
   );
 
+  /// Base [UserEntity] fixture with balance of 500,000 COP, sufficient to subscribe to [tFund].
   const tUser = UserEntity(
     id: '1',
     name: 'BTG User',
     balance: 500000,
   );
 
+  /// Base [FundEntity] fixture in subscribed state with isSubscribed set to true.
   const tSubscribedFund = FundEntity(
     id: '1',
     name: 'FPV_BTG_PACTUAL_RECAUDADORA',
