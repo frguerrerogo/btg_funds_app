@@ -5,22 +5,16 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 /// Mock implementation of [UserRepository] for testing purposes.
-///
-/// Provides a test double that simulates user data access without
-/// hitting the actual data layer, enabling isolated unit tests.
 class MockUserRepository extends Mock implements UserRepository {}
 
 void main() {
-  /// System under test: the [GetUserUseCase] instance being tested.
+  /// The system under test: [GetUserUseCase].
   late GetUserUseCase sut;
 
-  /// Mock repository dependency for the system under test.
+  /// Mock of [UserRepository] injected into [sut].
   late MockUserRepository mockUserRepository;
 
-  /// Base test user with COP $500,000 balance and no subscriptions.
-  ///
-  /// Represents a standard user profile used across test scenarios,
-  /// providing consistent test data for verifying user retrieval logic.
+  /// Base UserEntity fixture with id '1' and balance 500000.
   const tUser = UserEntity(
     id: '1',
     name: 'BTG User',

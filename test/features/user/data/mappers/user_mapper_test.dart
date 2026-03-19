@@ -5,12 +5,10 @@ import 'package:btg_funds_app/features/user/domain/domain.dart'
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  /// The system under test (SUT) - the user mapper being tested.
-  /// Initialized with an ActiveSubscriptionMapper dependency.
+  /// The system under test: [UserMapper].
   late UserMapper mapper;
 
-  /// A test fixture representing a subscription DTO with standard data.
-  /// Used as a nested component in user DTO tests.
+  /// Base ActiveSubscriptionDto fixture with fundId '1' and amount 75000.
   const tSubscriptionDto = ActiveSubscriptionDto(
     fundId: '1',
     fundName: 'FPV_BTG_PACTUAL_RECAUDADORA',
@@ -18,9 +16,7 @@ void main() {
     subscribedAt: '2024-01-01T00:00:00.000',
   );
 
-  /// A test fixture representing a user DTO with standard data.
-  /// Includes a list of subscription DTOs and represents the API response format.
-  /// Used to verify data-to-domain layer conversion.
+  /// Base UserDto fixture with id '1', balance 500000, and nested activeSubscriptions.
   const tUserDto = UserDto(
     id: '1',
     name: 'BTG User',
@@ -28,9 +24,7 @@ void main() {
     activeSubscriptions: [tSubscriptionDto],
   );
 
-  /// A test fixture representing a subscription entity with standard data.
-  /// Mirrors [tSubscriptionDto] but with DateTime parsing applied, used as a
-  /// nested component in user entity tests.
+  /// Base ActiveSubscriptionEntity fixture with fundId '1' and DateTime.parse('2024-01-01T00:00:00.000').
   final tSubscriptionEntity = ActiveSubscriptionEntity(
     fundId: '1',
     fundName: 'FPV_BTG_PACTUAL_RECAUDADORA',
@@ -38,9 +32,7 @@ void main() {
     subscribedAt: DateTime.parse('2024-01-01T00:00:00.000'),
   );
 
-  /// A test fixture representing a user entity with standard data.
-  /// Mirrors [tUserDto] but with DateTime parsing applied for subscriptions.
-  /// Represents the expected mapping output from DTO to domain entity.
+  /// Base UserEntity fixture with id '1', balance 500000, and nested activeSubscriptions.
   final tUserEntity = UserEntity(
     id: '1',
     name: 'BTG User',

@@ -4,11 +4,10 @@ import 'package:btg_funds_app/features/user/domain/domain.dart' show ActiveSubsc
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  /// The system under test (SUT) - the mapper being tested.
+  /// The system under test: [ActiveSubscriptionMapper].
   late ActiveSubscriptionMapper mapper;
 
-  /// A test fixture representing a DTO with standard subscription data.
-  /// Used to verify data-to-domain layer conversion.
+  /// Base ActiveSubscriptionDto fixture with fundId '1' and subscribedAt '2024-01-01T00:00:00.000'.
   const tDto = ActiveSubscriptionDto(
     fundId: '1',
     fundName: 'FPV_BTG_PACTUAL_RECAUDADORA',
@@ -16,9 +15,7 @@ void main() {
     subscribedAt: '2024-01-01T00:00:00.000',
   );
 
-  /// A test fixture representing a domain entity with standard subscription data.
-  /// Mirrors [tDto] but with DateTime parsing applied, used to verify
-  /// the expected mapping output from DTO to entity.
+  /// Base ActiveSubscriptionEntity fixture with fundId '1' and DateTime.parse('2024-01-01T00:00:00.000').
   final tEntity = ActiveSubscriptionEntity(
     fundId: '1',
     fundName: 'FPV_BTG_PACTUAL_RECAUDADORA',
