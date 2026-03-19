@@ -3,11 +3,12 @@
 library;
 
 // Datasources
+export 'datasources/user_remote_datasource.dart';
 // Mappers
 export 'mappers/active_subscriptions_mapper.dart';
 export 'mappers/user_mapper.dart';
 // Models
 export 'models/active_subscription_dto.dart';
 export 'models/user_dto.dart';
-
 // Repositories
+export 'repositories/user_repository_impl.dart';
