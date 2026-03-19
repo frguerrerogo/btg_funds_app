@@ -1,9 +1,5 @@
-/// Transaction data layer barrel file.
-///
-/// Exports the data layer components for transaction management, including mappers
-/// for converting between domain entities and data transfer objects (DTOs),
-/// and model definitions used for API communication and persistence.
-/// This module serves as the central point for accessing the transaction data layer abstractions.
+/// Data layer exports for the transaction feature.
+/// Exposes mappers and models for API communication and persistence.
 library;
 
 // Datasources

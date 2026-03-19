@@ -1,8 +1,5 @@
-/// User domain layer barrel file.
-///
-/// Exports the core domain components for user management, including
-/// entities, repositories, and use cases. This module defines the business
-/// logic contracts and data structures for user accounts and subscriptions.
+/// Domain layer exports for the user feature.
+/// Exposes entities, repositories, and use cases for user management.
 library;
 
 // Entities

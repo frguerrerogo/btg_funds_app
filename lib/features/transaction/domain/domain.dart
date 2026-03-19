@@ -1,9 +1,5 @@
-/// Transaction domain layer barrel file.
-///
-/// Exports the core domain components for transaction management, including
-/// entities, repositories, and use cases. This module defines the business logic contracts,
-/// data structures, and use case implementations for financial transactions in the
-/// investment fund system.
+/// Domain layer exports for the transaction feature.
+/// Exposes entities, repositories, and use cases for transaction management.
 library;
 
 // Entities

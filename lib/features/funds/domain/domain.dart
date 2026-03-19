@@ -1,9 +1,5 @@
-/// Funds domain layer barrel file.
-///
-/// Exports the core domain components for fund management, including
-/// entities, exceptions, repositories, and use cases. This module defines
-/// the business logic contracts and data structures for fund operations,
-/// subscriptions, and balance management.
+/// Domain layer exports for the funds feature.
+/// Exposes entities, exceptions, repositories, and use cases for fund operations.
 library;
 
 // Entities
