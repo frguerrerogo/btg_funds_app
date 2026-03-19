@@ -1,5 +1,3 @@
-// test/features/funds/domain/usecases/subscribe_fund_use_case_test.dart
-
 import 'package:btg_funds_app/features/funds/domain/domain.dart'
     show
         AlreadySubscribedException,
