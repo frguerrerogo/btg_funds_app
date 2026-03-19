@@ -16,6 +16,7 @@ dependencies:
   go_router: ^16.3.0
   intl: ^0.20.0
   json_annotation: ^4.9.0
+  logger: ^2.6.2
   riverpod_annotation: ^3.0.3
 
 dev_dependencies:
