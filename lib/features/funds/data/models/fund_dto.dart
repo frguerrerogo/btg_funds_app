@@ -5,14 +5,11 @@ part 'fund_dto.g.dart';
 
 /// Data Transfer Object representing a fund resource from the API.
 ///
-/// [FundDto] is used for serializing and deserializing fund data from JSON responses,
-/// mapping API data to the domain layer's [FundEntity].
+/// Used for JSON serialization/deserialization in the data layer.
+/// Maps to [FundEntity] in the domain layer.
 @JsonSerializable()
 class FundDto {
-  /// Creates a new [FundDto] instance.
-  ///
-  /// Requires all fund attributes including [id], [name], [minimumAmount],
-  /// [category], and [isSubscribed] status.
+  /// Creates a [FundDto] with the given fund attributes.
   const FundDto({
     required this.id,
     required this.name,
@@ -21,10 +18,7 @@ class FundDto {
     required this.isSubscribed,
   });
 
-  /// Constructs a [FundDto] instance from a JSON map.
-  ///
-  /// Deserializes JSON data received from the API into a [FundDto] object,
-  /// handling field name transformations defined by [JsonKey] annotations.
+  /// Creates a [FundDto] from a JSON [Map].
   factory FundDto.fromJson(Map<String, dynamic> json) => _$FundDtoFromJson(json);
 
   /// The unique identifier of the fund.
@@ -33,22 +27,17 @@ class FundDto {
   /// The display name of the fund.
   final String name;
 
-  /// The minimum investment amount required for the fund.
-  /// Corresponds to the 'minimum_amount' field in the JSON response.
+  /// The minimum investment amount required for the fund. Mapped from JSON key `minimum_amount`.
   @JsonKey(name: 'minimum_amount')
   final double minimumAmount;
 
   /// The fund category type, represented as a string (e.g., 'FPV' or 'FIC').
   final String category;
 
-  /// Whether the user is currently subscribed to this fund.
-  /// Corresponds to the 'is_subscribed' field in the JSON response.
+  /// Whether the user is currently subscribed to this fund. Mapped from JSON key `is_subscribed`.
   @JsonKey(name: 'is_subscribed')
   final bool isSubscribed;
 
-  /// Converts this [FundDto] instance to a JSON map.
-  ///
-  /// Serializes the DTO into a JSON-compatible map for API requests or persistence,
-  /// handling field name transformations defined by [JsonKey] annotations.
+  /// Converts this [FundDto] to a JSON [Map].
   Map<String, dynamic> toJson() => _$FundDtoToJson(this);
 }

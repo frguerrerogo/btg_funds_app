@@ -2,17 +2,10 @@ import 'package:btg_funds_app/core/core.dart' show Mapper;
 import 'package:btg_funds_app/features/user/data/data.dart' show ActiveSubscriptionDto;
 import 'package:btg_funds_app/features/user/domain/domain.dart' show ActiveSubscriptionEntity;
 
-/// Maps between [ActiveSubscriptionEntity] and [ActiveSubscriptionDto].
-///
-/// This mapper is responsible for converting active subscription domain entities
-/// to data transfer objects for API serialization, handling the conversion of
-/// DateTime objects to ISO 8601 strings and vice versa.
+/// Mapper that converts between [ActiveSubscriptionEntity] and [ActiveSubscriptionDto].
 class ActiveSubscriptionMapper extends Mapper<ActiveSubscriptionEntity, ActiveSubscriptionDto> {
-  /// Converts an [ActiveSubscriptionEntity] to an [ActiveSubscriptionDto].
-  ///
-  /// Maps the subscription's domain representation to a data transfer object suitable
-  /// for API communication, converting the DateTime `subscribedAt` to an ISO 8601 string
-  /// format. Returns an [ActiveSubscriptionDto] populated with data from [entity].
+  /// Converts an [ActiveSubscriptionEntity] from domain into an [ActiveSubscriptionDto].
+  /// Returns an [ActiveSubscriptionDto] populated with data from [entity].
   @override
   ActiveSubscriptionDto entityToModel(ActiveSubscriptionEntity entity) {
     return ActiveSubscriptionDto(
@@ -23,11 +16,8 @@ class ActiveSubscriptionMapper extends Mapper<ActiveSubscriptionEntity, ActiveSu
     );
   }
 
-  /// Converts an [ActiveSubscriptionDto] to an [ActiveSubscriptionEntity].
-  ///
-  /// Maps the subscription's data transfer object to a domain entity for use throughout
-  /// the application's business logic, parsing the `subscribedAt` ISO 8601 string to
-  /// a DateTime object. Returns an [ActiveSubscriptionEntity] populated with data from [model].
+  /// Converts an [ActiveSubscriptionDto] from data into an [ActiveSubscriptionEntity].
+  /// Returns an [ActiveSubscriptionEntity] populated with data from [model].
   @override
   ActiveSubscriptionEntity modelToEntity(ActiveSubscriptionDto model) {
     return ActiveSubscriptionEntity(

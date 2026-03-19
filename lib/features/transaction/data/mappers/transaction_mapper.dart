@@ -3,19 +3,10 @@ import 'package:btg_funds_app/features/transaction/data/data.dart' show Transact
 import 'package:btg_funds_app/features/transaction/domain/domain.dart'
     show NotificationMethod, TransactionEntity, TransactionType;
 
-/// Mapper for converting between [TransactionEntity] and [TransactionDto].
-///
-/// Handles bidirectional conversion of transaction data:
-/// - Domain entities to data transfer objects for persistence
-/// - Data transfer objects to domain entities for business logic
-/// Additionally manages type conversions for [TransactionType] and [NotificationMethod] enumerations.
+/// Mapper that converts between [TransactionEntity] and [TransactionDto].
 class TransactionMapper extends Mapper<TransactionEntity, TransactionDto> {
-  /// Converts a [TransactionDto] to a domain [TransactionEntity].
-  ///
-  /// Transforms the data transfer object [model] into a domain entity by mapping
-  /// string representations of transaction type and notification method to their
-  /// corresponding enum values, and converting the creation timestamp from ISO 8601 format.
-  /// Returns a fully initialized [TransactionEntity] ready for business logic operations.
+  /// Converts a [TransactionDto] from data into a [TransactionEntity].
+  /// Returns a [TransactionEntity] populated with data from [model].
   @override
   TransactionEntity modelToEntity(TransactionDto model) {
     return TransactionEntity(
@@ -29,12 +20,8 @@ class TransactionMapper extends Mapper<TransactionEntity, TransactionDto> {
     );
   }
 
-  /// Converts a [TransactionEntity] to a [TransactionDto].
-  ///
-  /// Transforms the domain entity [entity] into a data transfer object by mapping
-  /// type and notification method enums to their string representations, and converting
-  /// the creation timestamp to ISO 8601 format for storage.
-  /// Returns a [TransactionDto] ready for persistence or API communication.
+  /// Converts a [TransactionEntity] from domain into a [TransactionDto].
+  /// Returns a [TransactionDto] populated with data from [entity].
   @override
   TransactionDto entityToModel(TransactionEntity entity) {
     return TransactionDto(
