@@ -1,25 +1,25 @@
 import 'package:btg_funds_app/core/network/dio_client.dart';
-import 'package:btg_funds_app/features/user/data/data.dart' show UserDto;
+import 'package:btg_funds_app/features/user/data/data.dart' show ActiveSubscriptionDto, UserDto;
 
 /// Remote datasource interface for managing user data.
 abstract class UserRemoteDatasource {
-  /// Fetches user and returns a [UserDto].
+  /// Fetches the user and returns a [UserDto].
   Future<UserDto> getUser();
 
-  /// Updates user balance and returns a [UserDto].
+  /// Updates the user balance and returns a [UserDto].
   Future<UserDto> updateBalance(double newBalance);
 
-  /// Adds a subscribed fund and returns a [UserDto].
-  Future<UserDto> addSubscribedFund(String fundId);
+  /// Adds an active subscription and returns a [UserDto].
+  Future<UserDto> addActiveSubscription(ActiveSubscriptionDto subscription);
 
-  /// Removes a subscribed fund and returns a [UserDto].
-  Future<UserDto> removeSubscribedFund(String fundId);
+  /// Removes an active subscription identified by [fundId] and returns a [UserDto].
+  Future<UserDto> removeActiveSubscription(String fundId);
 }
 
 /// Dio-based implementation of [UserRemoteDatasource].
 class UserRemoteDatasourceImpl implements UserRemoteDatasource {
-  /// Creates a [UserRemoteDatasourceImpl] with the given [_dioClient].
-  const UserRemoteDatasourceImpl(this._dioClient);
+  /// Creates a [UserRemoteDatasourceImpl] with the given [dioClient].
+  const UserRemoteDatasourceImpl(DioClient dioClient) : _dioClient = dioClient;
   final DioClient _dioClient;
 
   @override
@@ -38,10 +38,11 @@ class UserRemoteDatasourceImpl implements UserRemoteDatasource {
   }
 
   @override
-  Future<UserDto> addSubscribedFund(String fundId) async {
+  Future<UserDto> addActiveSubscription(ActiveSubscriptionDto subscription) async {
     final user = await getUser();
     final updatedSubscriptions = [
       ...user.activeSubscriptions.map((s) => s.toJson()),
+      subscription.toJson(),
     ];
     final response = await _dioClient.dio.patch<Map<String, dynamic>>(
       '/user',
@@ -51,7 +52,7 @@ class UserRemoteDatasourceImpl implements UserRemoteDatasource {
   }
 
   @override
-  Future<UserDto> removeSubscribedFund(String fundId) async {
+  Future<UserDto> removeActiveSubscription(String fundId) async {
     final user = await getUser();
     final updatedSubscriptions = user.activeSubscriptions
         .where((s) => s.fundId != fundId)

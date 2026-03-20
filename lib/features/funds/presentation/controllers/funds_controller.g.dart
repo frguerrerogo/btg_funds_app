@@ -8,15 +8,18 @@ part of 'funds_controller.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
-/// Controller that manages [List<FundEntity>] state for the funds feature.
+/// Controller that manages fund list state for the funds feature.
+/// Handles fund retrieval and subscription management operations.
 
 @ProviderFor(FundsController)
 const fundsControllerProvider = FundsControllerProvider._();
 
-/// Controller that manages [List<FundEntity>] state for the funds feature.
+/// Controller that manages fund list state for the funds feature.
+/// Handles fund retrieval and subscription management operations.
 final class FundsControllerProvider
     extends $AsyncNotifierProvider<FundsController, List<FundEntity>> {
-  /// Controller that manages [List<FundEntity>] state for the funds feature.
+  /// Controller that manages fund list state for the funds feature.
+  /// Handles fund retrieval and subscription management operations.
   const FundsControllerProvider._()
     : super(
         from: null,
@@ -36,9 +39,10 @@ final class FundsControllerProvider
   FundsController create() => FundsController();
 }
 
-String _$fundsControllerHash() => r'07d610e9101ad1602ec963bcff6c8c5b367cd520';
+String _$fundsControllerHash() => r'2131d9ceb8e77b1353950fd2fa866ec431b17091';
 
-/// Controller that manages [List<FundEntity>] state for the funds feature.
+/// Controller that manages fund list state for the funds feature.
+/// Handles fund retrieval and subscription management operations.
 
 abstract class _$FundsController extends $AsyncNotifier<List<FundEntity>> {
   FutureOr<List<FundEntity>> build();

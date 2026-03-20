@@ -1,12 +1,9 @@
 {
   "user": {
-    "item": {
-      "id": "1",
-      "name": "BTG User",
-      "balance": 500000,
-      "active_subscriptions": []
-    },
-    "balance": 425000
+    "id": "1",
+    "name": "BTG User",
+    "balance": 500000,
+    "active_subscriptions": []
   },
   "funds": [
     {
@@ -40,15 +37,5 @@
       "category": "FPV"
     }
   ],
-  "transactions": [
-    {
-      "id": "15568951-01bf-4e79-8a1e-df361d5f6ef0",
-      "fund_id": "1",
-      "fund_name": "FPV_BTG_PACTUAL_RECAUDADORA",
-      "amount": 75000,
-      "type": "subscription",
-      "notification_method": "sms",
-      "created_at": "2026-03-20T05:00:39.888"
-    }
-  ]
+  "transactions": []
 }

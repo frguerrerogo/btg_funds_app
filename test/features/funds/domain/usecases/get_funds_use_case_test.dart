@@ -76,7 +76,7 @@ void main() {
       expect(result.length, 5);
     });
 
-    test('should return fpv and fic funds', () async {
+    test('should return 3 fpv and 2 fic funds', () async {
       // arrange
       when(() => mockFundsRepository.getFunds()).thenAnswer((_) async => tFunds);
 

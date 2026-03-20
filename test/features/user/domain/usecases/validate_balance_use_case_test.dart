@@ -28,7 +28,7 @@ void main() {
 
   group('ValidateBalanceUseCase', () {
     group('when balance is sufficient', () {
-      test('should return true for FPV_BTG_PACTUAL_RECAUDADORA (75.000)', () async {
+      test('should return true for minimum amount of 75.000', () async {
         // arrange
         when(() => mockUserRepository.getUser()).thenAnswer((_) async => tUser);
 

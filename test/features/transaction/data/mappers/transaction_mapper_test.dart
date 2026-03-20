@@ -9,7 +9,7 @@ void main() {
   /// The system under test: [TransactionMapper].
   late TransactionMapper mapper;
 
-  /// Base [TransactionDto] fixture for subscription transactions with email notification.
+  /// Base [TransactionDto] fixture with subscription type and email notification method.
   const tDto = TransactionDto(
     id: '1',
     fundId: '1',
@@ -20,9 +20,9 @@ void main() {
     createdAt: '2024-01-01T00:00:00.000',
   );
 
-  /// Base [TransactionDto] fixture for cancellation transactions with email notification.
+  /// [TransactionDto] fixture with cancellation type for testing enum mapping.
   const tCancellationDto = TransactionDto(
-    id: '1',
+    id: '2',
     fundId: '1',
     fundName: 'FPV_BTG_PACTUAL_RECAUDADORA',
     amount: 75000,
@@ -31,7 +31,7 @@ void main() {
     createdAt: '2024-01-01T00:00:00.000',
   );
 
-  /// Base [TransactionDto] fixture for subscription transactions with SMS notification.
+  /// [TransactionDto] fixture with sms notification method for testing enum mapping.
   const tSmsDto = TransactionDto(
     id: '1',
     fundId: '1',
@@ -42,7 +42,7 @@ void main() {
     createdAt: '2024-01-01T00:00:00.000',
   );
 
-  /// Base [TransactionEntity] fixture for subscription transactions with email notification.
+  /// Base [TransactionEntity] fixture with subscription type and email notification.
   final tEntity = TransactionEntity(
     id: '1',
     fundId: '1',
@@ -86,7 +86,22 @@ void main() {
 
       test('should parse createdAt string to DateTime', () {
         final result = mapper.modelToEntity(tDto);
-        expect(result.createdAt, DateTime.parse('2024-01-01T00:00:00.000'));
+        expect(
+          result.createdAt,
+          DateTime.parse('2024-01-01T00:00:00.000'),
+        );
+      });
+
+      test('should map isSubscription correctly', () {
+        final result = mapper.modelToEntity(tDto);
+        expect(result.isSubscription, true);
+        expect(result.isCancellation, false);
+      });
+
+      test('should map isCancellation correctly', () {
+        final result = mapper.modelToEntity(tCancellationDto);
+        expect(result.isCancellation, true);
+        expect(result.isSubscription, false);
       });
     });
 
@@ -94,9 +109,29 @@ void main() {
       test('should map TransactionEntity to TransactionDto correctly', () {
         final result = mapper.entityToModel(tEntity);
         expect(result.id, tEntity.id);
+        expect(result.fundId, tEntity.fundId);
+        expect(result.fundName, tEntity.fundName);
+        expect(result.amount, tEntity.amount);
         expect(result.type, 'subscription');
         expect(result.notificationMethod, 'email');
         expect(result.createdAt, tEntity.createdAt.toIso8601String());
+      });
+    });
+
+    group('modelsToEntities', () {
+      test('should map list of dtos to list of entities', () {
+        final result = mapper.modelsToEntities([tDto, tCancellationDto]);
+        expect(result.length, 2);
+        expect(result.first.isSubscription, true);
+        expect(result.last.isCancellation, true);
+      });
+    });
+
+    group('entitiesToModels', () {
+      test('should map list of entities to list of dtos', () {
+        final result = mapper.entitiesToModels([tEntity]);
+        expect(result.length, 1);
+        expect(result.first.type, 'subscription');
       });
     });
   });

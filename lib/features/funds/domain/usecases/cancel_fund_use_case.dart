@@ -4,7 +4,7 @@ import 'package:btg_funds_app/features/user/domain/domain.dart' show UserReposit
 
 /// Use case that cancels a user's fund subscription.
 ///
-/// Depends on [FundsRepository] for fund cancellation and [UserRepository] for balance and subscription updates.
+/// Depends on [FundsRepository] for fund data and [UserRepository] for user account updates.
 class CancelFundUseCase {
   /// Creates a [CancelFundUseCase] with [fundsRepository] and [userRepository].
   const CancelFundUseCase({
@@ -16,20 +16,25 @@ class CancelFundUseCase {
   final FundsRepository _fundsRepository;
   final UserRepository _userRepository;
 
-  /// Cancels the user's subscription to the fund identified by [fundId].
-  /// Returns a [FundEntity] reflecting the cancelled subscription status.
+  /// Cancels the fund subscription identified by [fundId].
+  /// Returns a [FundEntity] reflecting the fund after cancellation.
   /// Throws [NotSubscribedException] if the user is not subscribed to the fund.
   Future<FundEntity> execute({required String fundId}) async {
     final user = await _userRepository.getUser();
-    final fund = await _fundsRepository.getFundById(fundId);
 
+    // Validation based on user activeSubscriptions
+    if (!user.isSubscribedToFund(fundId)) {
+      throw const NotSubscribedException();
+    }
+
+    // Refund exact amount invested
     final subscription = user.getSubscription(fundId);
-    final refundAmount = subscription?.amount ?? fund.minimumAmount;
+    final refundAmount = subscription?.amount ?? 0;
     final newBalance = user.balance + refundAmount;
 
     await _userRepository.updateBalance(newBalance);
-    await _userRepository.removeSubscribedFund(fundId);
+    await _userRepository.removeActiveSubscription(fundId);
 
-    return _fundsRepository.cancelFund(fundId);
+    return _fundsRepository.getFundById(fundId);
   }
 }

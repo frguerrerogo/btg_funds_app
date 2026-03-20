@@ -36,8 +36,8 @@ class _FundsScreenState extends ConsumerState<FundsPage> {
           .read(fundsControllerProvider.notifier)
           .subscribeFund(
             fundId: fund.id,
-            fundName: fund.name,
-            amount: fund.minimumAmount,
+            name: fund.name,
+            minimumAmount: fund.minimumAmount,
           );
 
       await ref
@@ -89,7 +89,7 @@ class _FundsScreenState extends ConsumerState<FundsPage> {
     final confirmed = await _showCancelDialog(fund);
     if (!confirmed) return;
 
-    await ref.read(fundsControllerProvider.notifier).cancelFund(fund.id);
+    await ref.read(fundsControllerProvider.notifier).cancelFund(fundId: fund.id);
 
     await ref
         .read(transactionControllerProvider.notifier)

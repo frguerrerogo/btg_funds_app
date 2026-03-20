@@ -28,6 +28,21 @@ class FundMapper extends Mapper<FundEntity, FundDto> {
     );
   }
 
+  /// Converts a [FundDto] from the data layer into a [FundEntity].
+  /// Returns a [FundEntity] populated with data from [model].
+  FundEntity toEntityWithSubscription(
+    FundDto model,
+    List<String> subscribedFundIds,
+  ) {
+    return FundEntity(
+      id: model.id,
+      name: model.name,
+      minimumAmount: model.minimumAmount,
+      category: _mapCategory(model.category),
+      isSubscribed: subscribedFundIds.contains(model.id),
+    );
+  }
+
   FundCategory _mapCategory(String category) {
     switch (category.toUpperCase()) {
       case 'FPV':

@@ -8,12 +8,6 @@ abstract class FundsRemoteDatasource {
 
   /// Fetches fund by id and returns a [FundDto].
   Future<FundDto> getFundById(String id);
-
-  /// Updates fund subscription and returns a [FundDto].
-  Future<FundDto> subscribeFund(String fundId);
-
-  /// Removes fund subscription and returns a [FundDto].
-  Future<FundDto> cancelFund(String fundId);
 }
 
 /// Dio-based implementation of [FundsRemoteDatasource].
@@ -31,24 +25,6 @@ class FundsRemoteDatasourceImpl implements FundsRemoteDatasource {
   @override
   Future<FundDto> getFundById(String id) async {
     final response = await _dioClient.dio.get<Map<String, dynamic>>('/funds/$id');
-    return FundDto.fromJson(response.data!);
-  }
-
-  @override
-  Future<FundDto> subscribeFund(String fundId) async {
-    final response = await _dioClient.dio.patch<Map<String, dynamic>>(
-      '/funds/$fundId',
-      data: {'is_subscribed': true},
-    );
-    return FundDto.fromJson(response.data!);
-  }
-
-  @override
-  Future<FundDto> cancelFund(String fundId) async {
-    final response = await _dioClient.dio.patch<Map<String, dynamic>>(
-      '/funds/$fundId',
-      data: {'is_subscribed': false},
-    );
     return FundDto.fromJson(response.data!);
   }
 }

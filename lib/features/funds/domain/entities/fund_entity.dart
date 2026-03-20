@@ -12,15 +12,16 @@ enum FundCategory {
 }
 
 /// Represents a financial fund available for investor subscriptions.
-/// Encapsulates fund identification, name, minimum investment requirement, and category.
+/// Encapsulates fund identification, name, minimum investment requirement, category, and subscription status.
 @freezed
 abstract class FundEntity with _$FundEntity {
-  /// Creates a fund with [id] and [name] for identification, [minimumAmount] for investment requirement, and [category] for fund classification.
+  /// Creates a fund with [id], [name] for identification, [minimumAmount] for investment requirement, [category] for fund classification, and [isSubscribed] for subscription status.
   const factory FundEntity({
     required String id,
     required String name,
     required double minimumAmount,
     required FundCategory category,
+    @Default(false) bool isSubscribed,
   }) = _FundEntity;
 
   const FundEntity._();

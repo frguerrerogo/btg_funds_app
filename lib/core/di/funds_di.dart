@@ -1,4 +1,6 @@
-import 'package:btg_funds_app/core/core.dart' show dioClientProvider, userRepositoryProvider;
+import 'package:btg_funds_app/core/core.dart'
+    show dioClientProvider, userMapperProvider, userRepositoryProvider;
+import 'package:btg_funds_app/core/di/di.dart' show userRemoteDatasourceProvider;
 import 'package:btg_funds_app/features/funds/data/data.dart'
     show FundMapper, FundsRemoteDatasource, FundsRemoteDatasourceImpl, FundsRepositoryImpl;
 import 'package:btg_funds_app/features/funds/domain/domain.dart'
@@ -21,8 +23,10 @@ final fundMapperProvider = Provider<FundMapper>((ref) {
 /// Provider for [FundsRepository], backed by [FundsRepositoryImpl].
 final fundsRepositoryProvider = Provider<FundsRepository>((ref) {
   return FundsRepositoryImpl(
-    datasource: ref.read(fundsRemoteDatasourceProvider),
-    mapper: ref.read(fundMapperProvider),
+    fundsDatasource: ref.read(fundsRemoteDatasourceProvider),
+    fundMapper: ref.read(fundMapperProvider),
+    userDatasource: ref.read(userRemoteDatasourceProvider),
+    userMapper: ref.read(userMapperProvider),
   );
 });
 

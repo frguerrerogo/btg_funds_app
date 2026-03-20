@@ -50,7 +50,7 @@ void main() {
       expect(result.balance, 500000);
     });
 
-    test('should return user with no subscribed funds initially', () async {
+    test('should return user with no active subscriptions initially', () async {
       // arrange
       when(() => mockUserRepository.getUser()).thenAnswer((_) async => tUser);
 

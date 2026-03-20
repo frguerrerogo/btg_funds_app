@@ -7,7 +7,7 @@ void main() {
   /// The system under test: [FundMapper].
   late FundMapper mapper;
 
-  /// Base [FundDto] fixture with id '1', name 'FPV_BTG_PACTUAL_RECAUDADORA', and category 'FPV'.
+  /// Base [FundDto] fixture with minimumAmount 75000 and FPV category.
   const tDto = FundDto(
     id: '1',
     name: 'FPV_BTG_PACTUAL_RECAUDADORA',
@@ -15,7 +15,15 @@ void main() {
     category: 'FPV',
   );
 
-  /// Base [FundEntity] fixture with id '1', name 'FPV_BTG_PACTUAL_RECAUDADORA', and category [FundCategory.fpv].
+  /// [FundDto] fixture with FIC category for testing enum mapping.
+  const tFicDto = FundDto(
+    id: '3',
+    name: 'DEUDAPRIVADA',
+    minimumAmount: 50000,
+    category: 'FIC',
+  );
+
+  /// Base [FundEntity] fixture with minimumAmount 75000 and fpv category.
   const tEntity = FundEntity(
     id: '1',
     name: 'FPV_BTG_PACTUAL_RECAUDADORA',
@@ -30,48 +38,89 @@ void main() {
   group('FundMapper', () {
     group('modelToEntity', () {
       test('should map FundDto to FundEntity correctly', () {
-        // act
         final result = mapper.modelToEntity(tDto);
-
-        // assert
         expect(result, tEntity);
       });
 
       test('should map FPV category string to FundCategory.fpv', () {
-        // act
         final result = mapper.modelToEntity(tDto);
-
-        // assert
         expect(result.category, FundCategory.fpv);
       });
 
       test('should map FIC category string to FundCategory.fic', () {
-        // arrange
-        const ficDto = FundDto(
-          id: '3',
-          name: 'DEUDAPRIVADA',
-          minimumAmount: 50000,
-          category: 'FIC',
-        );
+        final result = mapper.modelToEntity(tFicDto);
+        expect(result.category, FundCategory.fic);
+      });
 
+      test('should map id correctly', () {
+        final result = mapper.modelToEntity(tDto);
+        expect(result.id, '1');
+      });
+
+      test('should map minimumAmount correctly', () {
+        final result = mapper.modelToEntity(tDto);
+        expect(result.minimumAmount, 75000);
+      });
+
+      test('should default isSubscribed to false', () {
+        final result = mapper.modelToEntity(tDto);
+        expect(result.isSubscribed, false);
+      });
+    });
+
+    group('toEntityWithSubscription', () {
+      test('should set isSubscribed to true when fundId is in subscribedIds', () {
         // act
-        final result = mapper.modelToEntity(ficDto);
+        final result = mapper.toEntityWithSubscription(tDto, ['1', '2']);
 
         // assert
-        expect(result.category, FundCategory.fic);
+        expect(result.isSubscribed, true);
+      });
+
+      test('should set isSubscribed to false when fundId is not in subscribedIds', () {
+        // act
+        final result = mapper.toEntityWithSubscription(tDto, ['2', '3']);
+
+        // assert
+        expect(result.isSubscribed, false);
+      });
+
+      test('should set isSubscribed to false when subscribedIds is empty', () {
+        // act
+        final result = mapper.toEntityWithSubscription(tDto, []);
+
+        // assert
+        expect(result.isSubscribed, false);
       });
     });
 
     group('entityToModel', () {
       test('should map FundEntity to FundDto correctly', () {
-        // act
         final result = mapper.entityToModel(tEntity);
-
-        // assert
         expect(result.id, tEntity.id);
         expect(result.name, tEntity.name);
         expect(result.minimumAmount, tEntity.minimumAmount);
         expect(result.category, 'FPV');
+      });
+
+      test('should map FIC category to string', () {
+        const ficEntity = FundEntity(
+          id: '3',
+          name: 'DEUDAPRIVADA',
+          minimumAmount: 50000,
+          category: FundCategory.fic,
+        );
+        final result = mapper.entityToModel(ficEntity);
+        expect(result.category, 'FIC');
+      });
+    });
+
+    group('modelsToEntities', () {
+      test('should map list of dtos to list of entities', () {
+        final result = mapper.modelsToEntities([tDto, tFicDto]);
+        expect(result.length, 2);
+        expect(result.first.category, FundCategory.fpv);
+        expect(result.last.category, FundCategory.fic);
       });
     });
   });
