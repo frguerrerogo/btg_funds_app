@@ -8,12 +8,15 @@ part of 'funds_controller.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
+/// Controller that manages [List<FundEntity>] state for the funds feature.
 
 @ProviderFor(FundsController)
 const fundsControllerProvider = FundsControllerProvider._();
 
+/// Controller that manages [List<FundEntity>] state for the funds feature.
 final class FundsControllerProvider
     extends $AsyncNotifierProvider<FundsController, List<FundEntity>> {
+  /// Controller that manages [List<FundEntity>] state for the funds feature.
   const FundsControllerProvider._()
     : super(
         from: null,
@@ -34,6 +37,8 @@ final class FundsControllerProvider
 }
 
 String _$fundsControllerHash() => r'07d610e9101ad1602ec963bcff6c8c5b367cd520';
+
+/// Controller that manages [List<FundEntity>] state for the funds feature.
 
 abstract class _$FundsController extends $AsyncNotifier<List<FundEntity>> {
   FutureOr<List<FundEntity>> build();

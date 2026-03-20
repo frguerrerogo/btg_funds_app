@@ -1,3 +1,5 @@
+import 'package:btg_funds_app/app/router/app_router.dart' show appRouter;
+import 'package:btg_funds_app/core/core.dart' show AppTheme;
 import 'package:flutter/material.dart';
 
 /// The root widget of the application.
@@ -9,12 +11,12 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+    return MaterialApp.router(
+      title: 'BTG Funds',
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
+      routerConfig: appRouter,
+      debugShowCheckedModeBanner: false,
     );
   }
 }

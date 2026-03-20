@@ -8,13 +8,16 @@ part of 'transaction_controller.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
+/// Controller that manages [List<TransactionEntity>] state for the transaction feature.
 
 @ProviderFor(TransactionController)
 const transactionControllerProvider = TransactionControllerProvider._();
 
+/// Controller that manages [List<TransactionEntity>] state for the transaction feature.
 final class TransactionControllerProvider
     extends
         $AsyncNotifierProvider<TransactionController, List<TransactionEntity>> {
+  /// Controller that manages [List<TransactionEntity>] state for the transaction feature.
   const TransactionControllerProvider._()
     : super(
         from: null,
@@ -36,6 +39,8 @@ final class TransactionControllerProvider
 
 String _$transactionControllerHash() =>
     r'b53341e6807e495c1674f1ab52abda37c1403e13';
+
+/// Controller that manages [List<TransactionEntity>] state for the transaction feature.
 
 abstract class _$TransactionController
     extends $AsyncNotifier<List<TransactionEntity>> {

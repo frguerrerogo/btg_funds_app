@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$FundEntity {
 
- String get id; String get name; double get minimumAmount; FundCategory get category; bool get isSubscribed;
+ String get id; String get name; double get minimumAmount; FundCategory get category;
 /// Create a copy of FundEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $FundEntityCopyWith<FundEntity> get copyWith => _$FundEntityCopyWithImpl<FundEnt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FundEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.minimumAmount, minimumAmount) || other.minimumAmount == minimumAmount)&&(identical(other.category, category) || other.category == category)&&(identical(other.isSubscribed, isSubscribed) || other.isSubscribed == isSubscribed));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FundEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.minimumAmount, minimumAmount) || other.minimumAmount == minimumAmount)&&(identical(other.category, category) || other.category == category));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name,minimumAmount,category,isSubscribed);
+int get hashCode => Object.hash(runtimeType,id,name,minimumAmount,category);
 
 @override
 String toString() {
-  return 'FundEntity(id: $id, name: $name, minimumAmount: $minimumAmount, category: $category, isSubscribed: $isSubscribed)';
+  return 'FundEntity(id: $id, name: $name, minimumAmount: $minimumAmount, category: $category)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $FundEntityCopyWith<$Res>  {
   factory $FundEntityCopyWith(FundEntity value, $Res Function(FundEntity) _then) = _$FundEntityCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, double minimumAmount, FundCategory category, bool isSubscribed
+ String id, String name, double minimumAmount, FundCategory category
 });
 
 
@@ -62,14 +62,13 @@ class _$FundEntityCopyWithImpl<$Res>
 
 /// Create a copy of FundEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? minimumAmount = null,Object? category = null,Object? isSubscribed = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? minimumAmount = null,Object? category = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,minimumAmount: null == minimumAmount ? _self.minimumAmount : minimumAmount // ignore: cast_nullable_to_non_nullable
 as double,category: null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
-as FundCategory,isSubscribed: null == isSubscribed ? _self.isSubscribed : isSubscribed // ignore: cast_nullable_to_non_nullable
-as bool,
+as FundCategory,
   ));
 }
 
@@ -154,10 +153,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  double minimumAmount,  FundCategory category,  bool isSubscribed)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  double minimumAmount,  FundCategory category)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _FundEntity() when $default != null:
-return $default(_that.id,_that.name,_that.minimumAmount,_that.category,_that.isSubscribed);case _:
+return $default(_that.id,_that.name,_that.minimumAmount,_that.category);case _:
   return orElse();
 
 }
@@ -175,10 +174,10 @@ return $default(_that.id,_that.name,_that.minimumAmount,_that.category,_that.isS
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  double minimumAmount,  FundCategory category,  bool isSubscribed)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  double minimumAmount,  FundCategory category)  $default,) {final _that = this;
 switch (_that) {
 case _FundEntity():
-return $default(_that.id,_that.name,_that.minimumAmount,_that.category,_that.isSubscribed);case _:
+return $default(_that.id,_that.name,_that.minimumAmount,_that.category);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -195,10 +194,10 @@ return $default(_that.id,_that.name,_that.minimumAmount,_that.category,_that.isS
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  double minimumAmount,  FundCategory category,  bool isSubscribed)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  double minimumAmount,  FundCategory category)?  $default,) {final _that = this;
 switch (_that) {
 case _FundEntity() when $default != null:
-return $default(_that.id,_that.name,_that.minimumAmount,_that.category,_that.isSubscribed);case _:
+return $default(_that.id,_that.name,_that.minimumAmount,_that.category);case _:
   return null;
 
 }
@@ -210,14 +209,13 @@ return $default(_that.id,_that.name,_that.minimumAmount,_that.category,_that.isS
 
 
 class _FundEntity extends FundEntity {
-  const _FundEntity({required this.id, required this.name, required this.minimumAmount, required this.category, this.isSubscribed = false}): super._();
+  const _FundEntity({required this.id, required this.name, required this.minimumAmount, required this.category}): super._();
   
 
 @override final  String id;
 @override final  String name;
 @override final  double minimumAmount;
 @override final  FundCategory category;
-@override@JsonKey() final  bool isSubscribed;
 
 /// Create a copy of FundEntity
 /// with the given fields replaced by the non-null parameter values.
@@ -229,16 +227,16 @@ _$FundEntityCopyWith<_FundEntity> get copyWith => __$FundEntityCopyWithImpl<_Fun
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FundEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.minimumAmount, minimumAmount) || other.minimumAmount == minimumAmount)&&(identical(other.category, category) || other.category == category)&&(identical(other.isSubscribed, isSubscribed) || other.isSubscribed == isSubscribed));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FundEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.minimumAmount, minimumAmount) || other.minimumAmount == minimumAmount)&&(identical(other.category, category) || other.category == category));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name,minimumAmount,category,isSubscribed);
+int get hashCode => Object.hash(runtimeType,id,name,minimumAmount,category);
 
 @override
 String toString() {
-  return 'FundEntity(id: $id, name: $name, minimumAmount: $minimumAmount, category: $category, isSubscribed: $isSubscribed)';
+  return 'FundEntity(id: $id, name: $name, minimumAmount: $minimumAmount, category: $category)';
 }
 
 
@@ -249,7 +247,7 @@ abstract mixin class _$FundEntityCopyWith<$Res> implements $FundEntityCopyWith<$
   factory _$FundEntityCopyWith(_FundEntity value, $Res Function(_FundEntity) _then) = __$FundEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, double minimumAmount, FundCategory category, bool isSubscribed
+ String id, String name, double minimumAmount, FundCategory category
 });
 
 
@@ -266,14 +264,13 @@ class __$FundEntityCopyWithImpl<$Res>
 
 /// Create a copy of FundEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? minimumAmount = null,Object? category = null,Object? isSubscribed = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? minimumAmount = null,Object? category = null,}) {
   return _then(_FundEntity(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,minimumAmount: null == minimumAmount ? _self.minimumAmount : minimumAmount // ignore: cast_nullable_to_non_nullable
 as double,category: null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
-as FundCategory,isSubscribed: null == isSubscribed ? _self.isSubscribed : isSubscribed // ignore: cast_nullable_to_non_nullable
-as bool,
+as FundCategory,
   ));
 }
 

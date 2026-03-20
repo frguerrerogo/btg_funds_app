@@ -1,6 +1,5 @@
 import 'package:btg_funds_app/features/funds/domain/domain.dart'
     show
-        AlreadySubscribedException,
         FundCategory,
         FundEntity,
         FundsRepository,
@@ -47,7 +46,6 @@ void main() {
     name: 'FPV_BTG_PACTUAL_RECAUDADORA',
     minimumAmount: 75000,
     category: FundCategory.fpv,
-    isSubscribed: true,
   );
 
   setUp(() {
@@ -69,15 +67,6 @@ void main() {
           () => mockUserRepository.updateBalance(425000),
         ).thenAnswer((_) async => tUser.copyWith(balance: 425000));
         when(() => mockUserRepository.addSubscribedFund('1')).thenAnswer((_) async => tUser);
-      });
-
-      test('should return subscribed fund', () async {
-        // act
-        final result = await sut.execute(fundId: '1');
-
-        // assert
-        expect(result.isSubscribed, true);
-        verify(() => mockFundsRepository.subscribeFund('1')).called(1);
       });
 
       test('should update user balance after subscription', () async {
@@ -108,20 +97,6 @@ void main() {
         expect(
           () => sut.execute(fundId: '1'),
           throwsA(isA<InsufficientBalanceException>()),
-        );
-      });
-    });
-
-    group('when fund is already subscribed', () {
-      test('should throw AlreadySubscribedException', () async {
-        // arrange
-        when(() => mockUserRepository.getUser()).thenAnswer((_) async => tUser);
-        when(() => mockFundsRepository.getFundById('1')).thenAnswer((_) async => tSubscribedFund);
-
-        // act & assert
-        expect(
-          () => sut.execute(fundId: '1'),
-          throwsA(isA<AlreadySubscribedException>()),
         );
       });
     });

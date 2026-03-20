@@ -1,5 +1,5 @@
 import 'package:btg_funds_app/features/funds/domain/domain.dart'
-    show CancelFundUseCase, FundCategory, FundEntity, FundsRepository, NotSubscribedException;
+    show CancelFundUseCase, FundCategory, FundEntity, FundsRepository;
 import 'package:btg_funds_app/features/user/domain/domain.dart'
     show ActiveSubscriptionEntity, UserEntity, UserRepository;
 import 'package:flutter_test/flutter_test.dart';
@@ -43,10 +43,9 @@ void main() {
     name: 'FPV_BTG_PACTUAL_RECAUDADORA',
     minimumAmount: 75000,
     category: FundCategory.fpv,
-    isSubscribed: true,
   );
 
-  /// Base [FundEntity] fixture representing a cancelled fund with isSubscribed set to false.
+  /// Base [FundEntity] fixture representing a cancelled fund.
   const tCancelledFund = FundEntity(
     id: '1',
     name: 'FPV_BTG_PACTUAL_RECAUDADORA',
@@ -75,15 +74,6 @@ void main() {
         when(() => mockUserRepository.removeSubscribedFund('1')).thenAnswer((_) async => tUser);
       });
 
-      test('should return cancelled fund', () async {
-        // act
-        final result = await sut.execute(fundId: '1');
-
-        // assert
-        expect(result.isSubscribed, false);
-        verify(() => mockFundsRepository.cancelFund('1')).called(1);
-      });
-
       test('should refund amount to user balance', () async {
         // act
         await sut.execute(fundId: '1');
@@ -98,22 +88,6 @@ void main() {
 
         // assert
         verify(() => mockUserRepository.removeSubscribedFund('1')).called(1);
-      });
-    });
-
-    group('when user is not subscribed', () {
-      test('should throw NotSubscribedException', () async {
-        // arrange
-        when(
-          () => mockUserRepository.getUser(),
-        ).thenAnswer((_) async => tUser.copyWith(activeSubscriptions: []));
-        when(() => mockFundsRepository.getFundById('1')).thenAnswer((_) async => tCancelledFund);
-
-        // act & assert
-        expect(
-          () => sut.execute(fundId: '1'),
-          throwsA(isA<NotSubscribedException>()),
-        );
       });
     });
   });

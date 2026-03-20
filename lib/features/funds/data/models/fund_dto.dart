@@ -15,7 +15,6 @@ class FundDto {
     required this.name,
     required this.minimumAmount,
     required this.category,
-    required this.isSubscribed,
   });
 
   /// Creates a [FundDto] from a JSON [Map].
@@ -33,10 +32,6 @@ class FundDto {
 
   /// The fund category type, represented as a string (e.g., 'FPV' or 'FIC').
   final String category;
-
-  /// Whether the user is currently subscribed to this fund. Mapped from JSON key `is_subscribed`.
-  @JsonKey(name: 'is_subscribed')
-  final bool isSubscribed;
 
   /// Converts this [FundDto] to a JSON [Map].
   Map<String, dynamic> toJson() => _$FundDtoToJson(this);

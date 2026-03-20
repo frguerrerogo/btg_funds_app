@@ -11,7 +11,6 @@ FundDto _$FundDtoFromJson(Map<String, dynamic> json) => FundDto(
   name: json['name'] as String,
   minimumAmount: (json['minimum_amount'] as num).toDouble(),
   category: json['category'] as String,
-  isSubscribed: json['is_subscribed'] as bool,
 );
 
 Map<String, dynamic> _$FundDtoToJson(FundDto instance) => <String, dynamic>{
@@ -19,5 +18,4 @@ Map<String, dynamic> _$FundDtoToJson(FundDto instance) => <String, dynamic>{
   'name': instance.name,
   'minimum_amount': instance.minimumAmount,
   'category': instance.category,
-  'is_subscribed': instance.isSubscribed,
 };

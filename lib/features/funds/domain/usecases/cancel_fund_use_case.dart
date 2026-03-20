@@ -16,14 +16,12 @@ class CancelFundUseCase {
   final FundsRepository _fundsRepository;
   final UserRepository _userRepository;
 
-  /// Cancels the user's subscription to the fund identified by [fundId]. Returns the [FundEntity] reflecting the cancelled subscription status. Throws [NotSubscribedException] if the user is not subscribed to the fund.
+  /// Cancels the user's subscription to the fund identified by [fundId].
+  /// Returns a [FundEntity] reflecting the cancelled subscription status.
+  /// Throws [NotSubscribedException] if the user is not subscribed to the fund.
   Future<FundEntity> execute({required String fundId}) async {
     final user = await _userRepository.getUser();
     final fund = await _fundsRepository.getFundById(fundId);
-
-    if (!fund.isSubscribed) {
-      throw const NotSubscribedException();
-    }
 
     final subscription = user.getSubscription(fundId);
     final refundAmount = subscription?.amount ?? fund.minimumAmount;

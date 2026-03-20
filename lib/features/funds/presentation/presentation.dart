@@ -2,3 +2,7 @@
 library;
 
 export 'controllers/funds_controller.dart';
+export 'pages/funds_page.dart';
+export 'widgets/balance_banner.dart';
+export 'widgets/fund_card.dart';
+export 'widgets/notification_selector.dart';

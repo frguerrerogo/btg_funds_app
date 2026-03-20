@@ -13,7 +13,6 @@ void main() {
     name: 'FPV_BTG_PACTUAL_RECAUDADORA',
     minimumAmount: 75000,
     category: 'FPV',
-    isSubscribed: false,
   );
 
   /// Base [FundEntity] fixture with id '1', name 'FPV_BTG_PACTUAL_RECAUDADORA', and category [FundCategory.fpv].
@@ -53,7 +52,6 @@ void main() {
           name: 'DEUDAPRIVADA',
           minimumAmount: 50000,
           category: 'FIC',
-          isSubscribed: false,
         );
 
         // act
@@ -61,23 +59,6 @@ void main() {
 
         // assert
         expect(result.category, FundCategory.fic);
-      });
-
-      test('should map isSubscribed correctly', () {
-        // arrange
-        const subscribedDto = FundDto(
-          id: '1',
-          name: 'FPV_BTG_PACTUAL_RECAUDADORA',
-          minimumAmount: 75000,
-          category: 'FPV',
-          isSubscribed: true,
-        );
-
-        // act
-        final result = mapper.modelToEntity(subscribedDto);
-
-        // assert
-        expect(result.isSubscribed, true);
       });
     });
 
@@ -91,7 +72,6 @@ void main() {
         expect(result.name, tEntity.name);
         expect(result.minimumAmount, tEntity.minimumAmount);
         expect(result.category, 'FPV');
-        expect(result.isSubscribed, tEntity.isSubscribed);
       });
     });
   });

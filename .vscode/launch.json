@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "TaskSphere • DEV (Debug)",
+      "name": "BTGFunds • DEV (Debug)",
       "request": "launch",
       "type": "dart",
       "program": "lib/main.dart",
@@ -12,7 +12,18 @@
       ]
     },
     {
-      "name": "TaskSphere • PROD (Release)",
+      "name": "BTGFunds • DEV Web (Debug)", // ← nuevo
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "flutterMode": "debug",
+      "deviceId": "chrome", // ← o "web-server" si no quieres abrir Chrome
+      "toolArgs": [
+        "--dart-define=ENV=dev"
+      ]
+    },
+    {
+      "name": "BTGFunds • PROD (Release)",
       "request": "launch",
       "type": "dart",
       "program": "lib/main.dart",
@@ -22,7 +33,7 @@
       ]
     },
     {
-      "name": "TaskSphere • PROD (Profile)",
+      "name": "BTGFunds • PROD (Profile)",
       "request": "launch",
       "type": "dart",
       "program": "lib/main.dart",

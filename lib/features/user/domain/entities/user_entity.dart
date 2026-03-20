@@ -20,9 +20,6 @@ abstract class UserEntity with _$UserEntity {
   /// Returns `true` if [balance] is sufficient to cover the required [amount], `false` otherwise.
   bool hasEnoughBalance(double amount) => balance >= amount;
 
-  /// Returns `true` if the user is subscribed to the fund identified by [fundId], `false` otherwise.
-  bool isSubscribedToFund(String fundId) => activeSubscriptions.any((s) => s.fundId == fundId);
-
   /// Returns the [ActiveSubscriptionEntity] for the fund identified by [fundId], or `null` if not subscribed.
   ActiveSubscriptionEntity? getSubscription(String fundId) =>
       activeSubscriptions.where((s) => s.fundId == fundId).firstOrNull;

@@ -16,14 +16,12 @@ class SubscribeFundUseCase {
   final FundsRepository _fundsRepository;
   final UserRepository _userRepository;
 
-  /// Subscribes the user to the fund identified by [fundId]. Returns a [FundEntity] reflecting the active subscription status. Throws [AlreadySubscribedException] if already subscribed, [InsufficientBalanceException] if balance is insufficient.
+  /// Subscribes the user to the fund identified by [fundId].
+  /// Returns a [FundEntity] reflecting the active subscription status.
+  /// Throws [AlreadySubscribedException] if already subscribed, or [InsufficientBalanceException] if balance is insufficient.
   Future<FundEntity> execute({required String fundId}) async {
     final user = await _userRepository.getUser();
     final fund = await _fundsRepository.getFundById(fundId);
-
-    if (fund.isSubscribed) {
-      throw const AlreadySubscribedException();
-    }
 
     if (!user.hasEnoughBalance(fund.minimumAmount)) {
       throw const InsufficientBalanceException();

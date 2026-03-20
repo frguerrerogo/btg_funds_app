@@ -1,0 +1,54 @@
+{
+  "user": {
+    "item": {
+      "id": "1",
+      "name": "BTG User",
+      "balance": 500000,
+      "active_subscriptions": []
+    },
+    "balance": 425000
+  },
+  "funds": [
+    {
+      "id": "1",
+      "name": "FPV_BTG_PACTUAL_RECAUDADORA",
+      "minimum_amount": 75000,
+      "category": "FPV"
+    },
+    {
+      "id": "2",
+      "name": "FPV_BTG_PACTUAL_ECOPETROL",
+      "minimum_amount": 125000,
+      "category": "FPV"
+    },
+    {
+      "id": "3",
+      "name": "DEUDAPRIVADA",
+      "minimum_amount": 50000,
+      "category": "FIC"
+    },
+    {
+      "id": "4",
+      "name": "FDO-ACCIONES",
+      "minimum_amount": 250000,
+      "category": "FIC"
+    },
+    {
+      "id": "5",
+      "name": "FPV_BTG_PACTUAL_DINAMICA",
+      "minimum_amount": 100000,
+      "category": "FPV"
+    }
+  ],
+  "transactions": [
+    {
+      "id": "15568951-01bf-4e79-8a1e-df361d5f6ef0",
+      "fund_id": "1",
+      "fund_name": "FPV_BTG_PACTUAL_RECAUDADORA",
+      "amount": 75000,
+      "type": "subscription",
+      "notification_method": "sms",
+      "created_at": "2026-03-20T05:00:39.888"
+    }
+  ]
+}
