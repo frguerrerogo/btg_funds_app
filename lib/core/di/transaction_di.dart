@@ -6,7 +6,7 @@ import 'package:btg_funds_app/features/transaction/data/data.dart'
         TransactionRemoteDatasourceImpl,
         TransactionRepositoryImpl;
 import 'package:btg_funds_app/features/transaction/domain/domain.dart'
-    show GetHistoryUseCase, TransactionRepository;
+    show GetHistoryUseCase, SaveTransactionUseCase, TransactionRepository;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Datasource
@@ -34,4 +34,9 @@ final transactionRepositoryProvider = Provider<TransactionRepository>((ref) {
 /// Provider for [GetHistoryUseCase].
 final getHistoryUseCaseProvider = Provider<GetHistoryUseCase>((ref) {
   return GetHistoryUseCase(ref.read(transactionRepositoryProvider));
+});
+
+/// Provider for [SaveTransactionUseCase].
+final saveTransactionUseCaseProvider = Provider<SaveTransactionUseCase>((ref) {
+  return SaveTransactionUseCase(ref.read(transactionRepositoryProvider));
 });

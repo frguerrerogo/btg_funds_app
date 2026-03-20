@@ -39,7 +39,7 @@ final class FundsControllerProvider
   FundsController create() => FundsController();
 }
 
-String _$fundsControllerHash() => r'2131d9ceb8e77b1353950fd2fa866ec431b17091';
+String _$fundsControllerHash() => r'7767b01ee5aefda69bbce4599974c8897c8d5553';
 
 /// Controller that manages fund list state for the funds feature.
 /// Handles fund retrieval and subscription management operations.

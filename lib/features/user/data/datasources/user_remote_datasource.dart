@@ -24,14 +24,14 @@ class UserRemoteDatasourceImpl implements UserRemoteDatasource {
 
   @override
   Future<UserDto> getUser() async {
-    final response = await _dioClient.dio.get<Map<String, dynamic>>('/user');
+    final response = await _dioClient.dio.get<Map<String, dynamic>>('/user/07FG');
     return UserDto.fromJson(response.data!);
   }
 
   @override
   Future<UserDto> updateBalance(double newBalance) async {
     final response = await _dioClient.dio.patch<Map<String, dynamic>>(
-      '/user',
+      '/user/07FG',
       data: {'balance': newBalance},
     );
     return UserDto.fromJson(response.data!);
@@ -45,7 +45,7 @@ class UserRemoteDatasourceImpl implements UserRemoteDatasource {
       subscription.toJson(),
     ];
     final response = await _dioClient.dio.patch<Map<String, dynamic>>(
-      '/user',
+      '/user/07FG',
       data: {'active_subscriptions': updatedSubscriptions},
     );
     return UserDto.fromJson(response.data!);
@@ -59,7 +59,7 @@ class UserRemoteDatasourceImpl implements UserRemoteDatasource {
         .map((s) => s.toJson())
         .toList();
     final response = await _dioClient.dio.patch<Map<String, dynamic>>(
-      '/user',
+      '/user/07FG',
       data: {'active_subscriptions': updatedSubscriptions},
     );
     return UserDto.fromJson(response.data!);

@@ -8,3 +8,4 @@ export 'entities/transaction_entity.dart';
 export 'repositories/transaction_repository.dart';
 // Usecases
 export 'usecases/get_history_use_case.dart';
+export 'usecases/save_transaction_use_case.dart';

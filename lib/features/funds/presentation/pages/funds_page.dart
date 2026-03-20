@@ -3,15 +3,11 @@ import 'package:btg_funds_app/features/funds/domain/domain.dart'
     show AlreadySubscribedException, FundEntity, InsufficientBalanceException;
 import 'package:btg_funds_app/features/funds/presentation/presentation.dart'
     show BalanceBanner, FundCard, NotificationSelector, fundsControllerProvider;
-import 'package:btg_funds_app/features/transaction/domain/domain.dart'
-    show NotificationMethod, TransactionEntity, TransactionType;
-import 'package:btg_funds_app/features/transaction/presentation/presentation.dart'
-    show transactionControllerProvider;
+import 'package:btg_funds_app/features/transaction/domain/domain.dart' show NotificationMethod;
 import 'package:btg_funds_app/features/user/presentation/presentation.dart'
     show userControllerProvider;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:uuid/uuid.dart';
 
 /// A funds browsing screen with fund cards and subscription actions.
 ///
@@ -38,20 +34,7 @@ class _FundsScreenState extends ConsumerState<FundsPage> {
             fundId: fund.id,
             name: fund.name,
             minimumAmount: fund.minimumAmount,
-          );
-
-      await ref
-          .read(transactionControllerProvider.notifier)
-          .saveTransaction(
-            TransactionEntity(
-              id: const Uuid().v4(),
-              fundId: fund.id,
-              fundName: fund.name,
-              amount: fund.minimumAmount,
-              type: TransactionType.subscription,
-              notificationMethod: _notificationMethod,
-              createdAt: DateTime.now(),
-            ),
+            notificationMethod: _notificationMethod,
           );
 
       if (mounted) {
@@ -90,20 +73,6 @@ class _FundsScreenState extends ConsumerState<FundsPage> {
     if (!confirmed) return;
 
     await ref.read(fundsControllerProvider.notifier).cancelFund(fundId: fund.id);
-
-    await ref
-        .read(transactionControllerProvider.notifier)
-        .saveTransaction(
-          TransactionEntity(
-            id: const Uuid().v4(),
-            fundId: fund.id,
-            fundName: fund.name,
-            amount: fund.minimumAmount,
-            type: TransactionType.cancellation,
-            notificationMethod: _notificationMethod,
-            createdAt: DateTime.now(),
-          ),
-        );
 
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
