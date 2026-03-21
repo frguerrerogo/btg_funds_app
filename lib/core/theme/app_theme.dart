@@ -16,16 +16,21 @@ class AppTheme {
       foregroundColor: Colors.white,
       elevation: 0,
       centerTitle: false,
+      titleTextStyle: TextStyle(
+        color: Colors.white,
+        fontSize: 20,
+        fontWeight: FontWeight.w700,
+      ),
     ),
     navigationBarTheme: NavigationBarThemeData(
-      indicatorColor: const Color(0xFFE6F1FB),
+      indicatorColor: AppColors.fpvBg,
       labelTextStyle: WidgetStateProperty.all(
         const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
       ),
     ),
     navigationRailTheme: const NavigationRailThemeData(
       backgroundColor: Colors.white,
-      indicatorColor: Color(0xFFE6F1FB),
+      indicatorColor: AppColors.fpvBg,
       selectedIconTheme: IconThemeData(color: AppColors.primary),
       selectedLabelTextStyle: TextStyle(
         color: AppColors.primary,
@@ -37,7 +42,7 @@ class AppTheme {
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
-        side: const BorderSide(color: Color(0x26000000), width: 0.5),
+        side: const BorderSide(color: AppColors.borderDark, width: 0.5),
       ),
       color: Colors.white,
     ),

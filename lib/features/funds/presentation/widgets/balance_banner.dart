@@ -37,17 +37,18 @@ class BalanceBanner extends StatelessWidget {
                 const Text(
                   'Saldo disponible',
                   style: TextStyle(
-                    color: Color(0xFF93B3E0),
-                    fontSize: 12,
+                    color: AppColors.bannerLabel,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 13,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   balance.formatCOP(),
                   style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 22,
-                    fontWeight: FontWeight.w600,
+                    color: AppColors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
               ],
@@ -59,17 +60,18 @@ class BalanceBanner extends StatelessWidget {
               const Text(
                 'Fondos suscritos',
                 style: TextStyle(
-                  color: Color(0xFF93B3E0),
-                  fontSize: 11,
+                  color: AppColors.bannerLabel,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 12,
                 ),
               ),
               const SizedBox(height: 4),
               Text(
                 '$subscribedCount',
                 style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 22,
-                  fontWeight: FontWeight.w600,
+                  color: AppColors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
             ],

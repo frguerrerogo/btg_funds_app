@@ -42,8 +42,8 @@ class FundCard extends StatelessWidget {
                       child: Text(
                         fund.name,
                         style: const TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16,
                         ),
                       ),
                     ),
@@ -54,7 +54,7 @@ class FundCard extends StatelessWidget {
                 Text(
                   'Monto mínimo: ${fund.minimumAmount.formatCOP()}',
                   style: TextStyle(
-                    fontSize: 13,
+                    fontSize: 15,
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
                 ),
@@ -69,7 +69,7 @@ class FundCard extends StatelessWidget {
                         icon: const Icon(Icons.cancel_outlined, size: 18),
                         label: const Text(
                           'Cancelar',
-                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+                          style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
                         ),
                         style: OutlinedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
@@ -85,7 +85,7 @@ class FundCard extends StatelessWidget {
                         icon: const Icon(Icons.add, size: 18),
                         label: const Text(
                           'Suscribirse',
-                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+                          style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
                         ),
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
@@ -119,7 +119,7 @@ class _CategoryBadge extends StatelessWidget {
       child: Text(
         isFpv ? 'FPV' : 'FIC',
         style: TextStyle(
-          fontSize: 11,
+          fontSize: 12,
           fontWeight: FontWeight.w500,
           color: isFpv ? AppColors.fpvText : AppColors.ficText,
         ),

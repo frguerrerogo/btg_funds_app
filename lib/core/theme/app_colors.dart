@@ -26,11 +26,17 @@ class AppColors {
   /// Subscription text color
   static const Color subscriptionText = Color(0xFF27500A);
 
+  /// Subscription text color (lighter variant for better contrast)
+  static const Color subscriptionTextLight = Color(0xFF4CAF50);
+
   /// Cancellation background color (same as errorLight)
   static const Color cancellationBg = Color(0xFFFCEBEB);
 
   /// Cancellation text color (same as error)
   static const Color cancellationText = Color(0xFFA32D2D);
+
+  /// Cancellation text color (lighter variant for better contrast)
+  static const Color cancellationTextLight = Color(0xFFE74C3C);
 
   // Fund category colors
   /// FPV category background color
@@ -54,6 +60,12 @@ class AppColors {
 
   /// Info state color
   static const Color info = Color(0xFF2196F3);
+
+  /// Light label color for banners (light blue)
+  static const Color bannerLabel = Color(0xFF93B3E0);
+
+  /// Semi-transparent black for borders
+  static const Color borderDark = Color(0x26000000);
 
   // Neutral colors
   /// White color

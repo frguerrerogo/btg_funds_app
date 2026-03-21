@@ -58,7 +58,14 @@ class _FundsPageState extends ConsumerState<FundsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Fondos disponibles'),
+        title: const Text(
+          'Fondos disponibles',
+          style: TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.w700,
+            color: AppColors.white,
+          ),
+        ),
         centerTitle: true,
       ),
       body: state.when(
@@ -97,7 +104,10 @@ class _FundsPageState extends ConsumerState<FundsPage> {
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
                   child: const Center(
-                    child: Text('No hay fondos disponibles'),
+                    child: Text(
+                      'No hay fondos disponibles',
+                      style: TextStyle(fontSize: 16),
+                    ),
                   ),
                 ),
               )

@@ -1,5 +1,5 @@
 import 'package:btg_funds_app/core/core.dart'
-    show AppStateErrorWidget, ErrorMappingExtension, LoadingWidget, ResponsiveExtension;
+    show AppColors, AppStateErrorWidget, ErrorMappingExtension, LoadingWidget, ResponsiveExtension;
 import 'package:btg_funds_app/features/transaction/presentation/presentation.dart'
     show TransactionState, TransactionTile, transactionControllerProvider;
 import 'package:flutter/material.dart';
@@ -18,7 +18,14 @@ class TransactionHistoryPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Historial de transacciones'),
+        title: const Text(
+          'Historial de transacciones',
+          style: TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.w700,
+            color: AppColors.white,
+          ),
+        ),
         centerTitle: true,
       ),
       body: state.when(
@@ -44,11 +51,11 @@ class TransactionHistoryPage extends ConsumerWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.receipt_long_outlined, size: 48, color: Colors.grey),
+                  Icon(Icons.receipt_long_outlined, size: 48, color: AppColors.grey),
                   SizedBox(height: 12),
                   Text(
                     'No hay transacciones aún',
-                    style: TextStyle(color: Colors.grey),
+                    style: TextStyle(color: AppColors.grey),
                   ),
                 ],
               ),

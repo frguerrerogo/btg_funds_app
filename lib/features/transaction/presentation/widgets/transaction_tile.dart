@@ -39,7 +39,9 @@ class TransactionTile extends StatelessWidget {
               ),
               child: Icon(
                 isSubscription ? Icons.arrow_downward : Icons.arrow_upward,
-                color: isSubscription ? AppColors.subscriptionText : AppColors.cancellationText,
+                color: isSubscription
+                    ? AppColors.cancellationTextLight
+                    : AppColors.subscriptionTextLight,
                 size: 20,
               ),
             ),
@@ -51,22 +53,22 @@ class TransactionTile extends StatelessWidget {
                   Text(
                     isSubscription ? 'Suscripción' : 'Cancelación',
                     style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 16,
                       color: isSubscription
-                          ? AppColors.subscriptionText
-                          : AppColors.cancellationText,
+                          ? AppColors.cancellationTextLight
+                          : AppColors.subscriptionTextLight,
                     ),
                   ),
                   Text(
                     transaction.fundName,
-                    style: const TextStyle(fontSize: 13),
+                    style: const TextStyle(fontSize: 15),
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
                     'Notificación: ${transaction.notificationMethod == NotificationMethod.email ? 'Email' : 'SMS'}',
                     style: TextStyle(
-                      fontSize: 12,
+                      fontSize: 13,
                       color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
                   ),
@@ -79,15 +81,18 @@ class TransactionTile extends StatelessWidget {
                 Text(
                   '${isSubscription ? '-' : '+'}${transaction.amount.formatCOP()}',
                   style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                    color: isSubscription ? AppColors.cancellationText : AppColors.subscriptionText,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16,
+                    color: isSubscription
+                        ? AppColors.cancellationTextLight
+                        : AppColors.subscriptionTextLight,
                   ),
                 ),
                 Text(
                   _formatDate(transaction.createdAt),
                   style: TextStyle(
-                    fontSize: 11,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
                 ),
