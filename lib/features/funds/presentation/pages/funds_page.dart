@@ -4,8 +4,6 @@ import 'package:btg_funds_app/features/funds/domain/domain.dart'
 import 'package:btg_funds_app/features/funds/presentation/presentation.dart'
     show BalanceBanner, FundCard, NotificationSelector, fundsControllerProvider;
 import 'package:btg_funds_app/features/transaction/domain/domain.dart' show NotificationMethod;
-import 'package:btg_funds_app/features/user/presentation/presentation.dart'
-    show userControllerProvider;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -72,7 +70,14 @@ class _FundsScreenState extends ConsumerState<FundsPage> {
     final confirmed = await _showCancelDialog(fund);
     if (!confirmed) return;
 
-    await ref.read(fundsControllerProvider.notifier).cancelFund(fundId: fund.id);
+    await ref
+        .read(fundsControllerProvider.notifier)
+        .cancelFund(
+          fundId: fund.id,
+          fundName: fund.name,
+          amount: fund.minimumAmount,
+          notificationMethod: _notificationMethod,
+        );
 
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -144,54 +149,74 @@ class _FundsScreenState extends ConsumerState<FundsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final fundsState = ref.watch(fundsControllerProvider);
-    final userState = ref.watch(userControllerProvider);
+    final state = ref.watch(fundsControllerProvider);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Fondos disponibles')),
-      body: Column(
-        children: [
-          userState.when(
-            data: (user) => BalanceBanner(
-              balance: user.balance,
-              subscribedCount: user.activeSubscriptions.length,
-            ),
-            loading: () => const SizedBox(height: 80),
-            error: (_, _) => const SizedBox.shrink(),
-          ),
-          Expanded(
-            child: fundsState.when(
-              data: (funds) => LayoutBuilder(
-                builder: (context, constraints) {
-                  final isWide = constraints.maxWidth >= 600;
-                  return GridView.builder(
-                    padding: const EdgeInsets.all(16),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: isWide ? 2 : 1,
-                      crossAxisSpacing: 12,
-                      mainAxisSpacing: 12,
-                      childAspectRatio: isWide ? 2.2 : 3.5,
+      body: state.when(
+        data: (fundsState) => LayoutBuilder(
+          builder: (context, constraints) {
+            final isWide = constraints.maxWidth >= 600;
+            return CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: BalanceBanner(
+                    balance: fundsState.user.balance,
+                    subscribedCount: fundsState.user.activeSubscriptions.length,
+                  ),
+                ),
+                if (fundsState.funds.isEmpty)
+                  const SliverFillRemaining(
+                    child: Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.account_balance_outlined,
+                            size: 48,
+                            color: Colors.grey,
+                          ),
+                          SizedBox(height: 12),
+                          Text(
+                            'No hay fondos disponibles',
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                        ],
+                      ),
                     ),
-                    itemCount: funds.length,
-                    itemBuilder: (context, index) {
-                      final fund = funds[index];
-                      return FundCard(
-                        fund: fund,
-                        onSubscribe: () => _onSubscribe(fund),
-                        onCancel: () => _onCancel(fund),
-                      );
-                    },
-                  );
-                },
-              ),
-              loading: () => const LoadingWidget(),
-              error: (error, _) => AppStateErrorWidget(
-                message: error.toString(),
-                onRetry: () => ref.invalidate(fundsControllerProvider),
-              ),
-            ),
-          ),
-        ],
+                  )
+                else
+                  SliverPadding(
+                    padding: const EdgeInsets.all(16),
+                    sliver: SliverGrid(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: isWide ? 2 : 1,
+                        crossAxisSpacing: 12,
+                        mainAxisSpacing: 12,
+                        childAspectRatio: isWide ? 2.2 : 3.5,
+                      ),
+                      delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          final fund = fundsState.funds[index];
+                          return FundCard(
+                            fund: fund,
+                            onSubscribe: () => _onSubscribe(fund),
+                            onCancel: () => _onCancel(fund),
+                          );
+                        },
+                        childCount: fundsState.funds.length,
+                      ),
+                    ),
+                  ),
+              ],
+            );
+          },
+        ),
+        loading: () => const LoadingWidget(),
+        error: (error, _) => AppStateErrorWidget(
+          message: error.toString(),
+          onRetry: () => ref.invalidate(fundsControllerProvider),
+        ),
       ),
     );
   }

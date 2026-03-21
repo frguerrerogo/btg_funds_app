@@ -60,24 +60,20 @@ class AdaptiveScaffold extends StatelessWidget {
               onDestinationSelected: (i) => _onDestinationSelected(context, i),
               leading: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
-                child: Image.asset(
-                  'assets/images/btg_logo.png',
+                child: Container(
                   width: 40,
-                  errorBuilder: (_, _, _) => Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF003087),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        'BTG',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 10,
-                          fontWeight: FontWeight.bold,
-                        ),
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF003087),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'BTG',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),

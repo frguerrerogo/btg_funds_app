@@ -68,32 +68,6 @@ void main() {
       });
     });
 
-    group('toEntityWithSubscription', () {
-      test('should set isSubscribed to true when fundId is in subscribedIds', () {
-        // act
-        final result = mapper.toEntityWithSubscription(tDto, ['1', '2']);
-
-        // assert
-        expect(result.isSubscribed, true);
-      });
-
-      test('should set isSubscribed to false when fundId is not in subscribedIds', () {
-        // act
-        final result = mapper.toEntityWithSubscription(tDto, ['2', '3']);
-
-        // assert
-        expect(result.isSubscribed, false);
-      });
-
-      test('should set isSubscribed to false when subscribedIds is empty', () {
-        // act
-        final result = mapper.toEntityWithSubscription(tDto, []);
-
-        // assert
-        expect(result.isSubscribed, false);
-      });
-    });
-
     group('entityToModel', () {
       test('should map FundEntity to FundDto correctly', () {
         final result = mapper.entityToModel(tEntity);

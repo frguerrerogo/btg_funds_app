@@ -16,12 +16,15 @@ abstract class TransactionRemoteDatasource {
 class TransactionRemoteDatasourceImpl implements TransactionRemoteDatasource {
   /// Creates a [TransactionRemoteDatasourceImpl] with the given [_dioClient].
   const TransactionRemoteDatasourceImpl(this._dioClient);
+
+  static const String _transactionsEndpoint = '/transactions';
+
   final DioClient _dioClient;
 
   @override
   Future<List<TransactionDto>> getHistory() async {
     final response = await _dioClient.dio.get<List<dynamic>>(
-      '/transactions',
+      _transactionsEndpoint,
       queryParameters: {'_sort': 'created_at', '_order': 'desc'},
     );
     return (response.data!)
@@ -32,7 +35,7 @@ class TransactionRemoteDatasourceImpl implements TransactionRemoteDatasource {
   @override
   Future<TransactionDto> saveTransaction(TransactionDto transaction) async {
     final response = await _dioClient.dio.post<Map<String, dynamic>>(
-      '/transactions',
+      _transactionsEndpoint,
       data: transaction.toJson(),
     );
     return TransactionDto.fromJson(response.data!);

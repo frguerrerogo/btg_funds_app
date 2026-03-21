@@ -9,13 +9,13 @@
           "fund_id": "1",
           "fund_name": "FPV_BTG_PACTUAL_RECAUDADORA",
           "amount": 75000,
-          "subscribed_at": "2026-03-20T15:49:02.647"
+          "subscribed_at": "2026-03-20T18:03:25.124"
         },
         {
           "fund_id": "2",
           "fund_name": "FPV_BTG_PACTUAL_ECOPETROL",
           "amount": 125000,
-          "subscribed_at": "2026-03-20T15:51:54.023"
+          "subscribed_at": "2026-03-20T18:47:23.064"
         }
       ]
     }
@@ -106,6 +106,42 @@
       "type": "subscription",
       "notification_method": "email",
       "created_at": "2026-03-20T15:51:54.142"
+    },
+    {
+      "id": "f76d5ae0-239e-4519-9060-4556e76d8de9",
+      "fund_id": "5",
+      "fund_name": "FPV_BTG_PACTUAL_DINAMICA",
+      "amount": 100000,
+      "type": "subscription",
+      "notification_method": "email",
+      "created_at": "2026-03-20T16:09:32.986"
+    },
+    {
+      "id": "54f18811-d30f-4b27-a0f5-b05c7799b35b",
+      "fund_id": "3",
+      "fund_name": "DEUDAPRIVADA",
+      "amount": 50000,
+      "type": "subscription",
+      "notification_method": "sms",
+      "created_at": "2026-03-20T16:33:12.419"
+    },
+    {
+      "id": "2559e0ac-47b4-40f6-a5b2-c707068858d9",
+      "fund_id": "1",
+      "fund_name": "FPV_BTG_PACTUAL_RECAUDADORA",
+      "amount": 75000,
+      "type": "subscription",
+      "notification_method": "email",
+      "created_at": "2026-03-20T18:03:25.233"
+    },
+    {
+      "id": "9e785b75-624e-43e9-b5c0-72145e414d0f",
+      "fund_id": "2",
+      "fund_name": "FPV_BTG_PACTUAL_ECOPETROL",
+      "amount": 125000,
+      "type": "subscription",
+      "notification_method": "sms",
+      "created_at": "2026-03-20T18:47:23.167"
     }
   ]
 }

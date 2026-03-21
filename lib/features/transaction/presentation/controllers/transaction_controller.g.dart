@@ -38,7 +38,7 @@ final class TransactionControllerProvider
 }
 
 String _$transactionControllerHash() =>
-    r'b53341e6807e495c1674f1ab52abda37c1403e13';
+    r'dd70b16775222ada721d4c8548911f18bad94408';
 
 /// Controller that manages [List<TransactionEntity>] state for the transaction feature.
 

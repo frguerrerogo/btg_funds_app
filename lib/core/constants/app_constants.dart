@@ -11,5 +11,5 @@ class AppConstants {
   static const double initialBalance = 500000;
 
   /// Default user identifier used in API requests and user-specific operations.
-  static const String userId = '1';
+  static const String userId = '07FG';
 }

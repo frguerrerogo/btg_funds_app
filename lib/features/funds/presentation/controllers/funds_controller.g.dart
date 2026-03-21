@@ -8,18 +8,12 @@ part of 'funds_controller.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
-/// Controller that manages fund list state for the funds feature.
-/// Handles fund retrieval and subscription management operations.
 
 @ProviderFor(FundsController)
 const fundsControllerProvider = FundsControllerProvider._();
 
-/// Controller that manages fund list state for the funds feature.
-/// Handles fund retrieval and subscription management operations.
 final class FundsControllerProvider
-    extends $AsyncNotifierProvider<FundsController, List<FundEntity>> {
-  /// Controller that manages fund list state for the funds feature.
-  /// Handles fund retrieval and subscription management operations.
+    extends $AsyncNotifierProvider<FundsController, FundsState> {
   const FundsControllerProvider._()
     : super(
         from: null,
@@ -39,24 +33,20 @@ final class FundsControllerProvider
   FundsController create() => FundsController();
 }
 
-String _$fundsControllerHash() => r'7767b01ee5aefda69bbce4599974c8897c8d5553';
+String _$fundsControllerHash() => r'9a78419b8f7c34b693759b4d1828d35e535cb811';
 
-/// Controller that manages fund list state for the funds feature.
-/// Handles fund retrieval and subscription management operations.
-
-abstract class _$FundsController extends $AsyncNotifier<List<FundEntity>> {
-  FutureOr<List<FundEntity>> build();
+abstract class _$FundsController extends $AsyncNotifier<FundsState> {
+  FutureOr<FundsState> build();
   @$mustCallSuper
   @override
   void runBuild() {
     final created = build();
-    final ref =
-        this.ref as $Ref<AsyncValue<List<FundEntity>>, List<FundEntity>>;
+    final ref = this.ref as $Ref<AsyncValue<FundsState>, FundsState>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<AsyncValue<List<FundEntity>>, List<FundEntity>>,
-              AsyncValue<List<FundEntity>>,
+              AnyNotifier<AsyncValue<FundsState>, FundsState>,
+              AsyncValue<FundsState>,
               Object?,
               Object?
             >;

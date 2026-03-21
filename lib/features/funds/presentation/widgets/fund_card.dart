@@ -62,18 +62,18 @@ class FundCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 12),
-            // if (isSubscribed)
-            //   OutlinedButton.icon(
-            //     onPressed: onCancel,
-            //     icon: const Icon(Icons.cancel_outlined, size: 16),
-            //     label: const Text('Cancelar suscripción'),
-            //   )
-            // else
-            ElevatedButton.icon(
-              onPressed: onSubscribe,
-              icon: const Icon(Icons.add, size: 16),
-              label: const Text('Suscribirse'),
-            ),
+            if (fund.isSubscribed)
+              OutlinedButton.icon(
+                onPressed: onCancel,
+                icon: const Icon(Icons.cancel_outlined, size: 16),
+                label: const Text('Cancelar suscripción'),
+              )
+            else
+              ElevatedButton.icon(
+                onPressed: onSubscribe,
+                icon: const Icon(Icons.add, size: 16),
+                label: const Text('Suscribirse'),
+              ),
           ],
         ),
       ),
