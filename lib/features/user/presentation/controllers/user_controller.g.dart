@@ -8,15 +8,15 @@ part of 'user_controller.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
-/// Controller that manages [UserEntity] state for the user feature.
+/// Controller that manages [UserState] state for the user feature.
 
 @ProviderFor(UserController)
 const userControllerProvider = UserControllerProvider._();
 
-/// Controller that manages [UserEntity] state for the user feature.
+/// Controller that manages [UserState] state for the user feature.
 final class UserControllerProvider
-    extends $AsyncNotifierProvider<UserController, UserEntity> {
-  /// Controller that manages [UserEntity] state for the user feature.
+    extends $AsyncNotifierProvider<UserController, UserState> {
+  /// Controller that manages [UserState] state for the user feature.
   const UserControllerProvider._()
     : super(
         from: null,
@@ -36,22 +36,22 @@ final class UserControllerProvider
   UserController create() => UserController();
 }
 
-String _$userControllerHash() => r'18acffa6afcedcb469179bae49f0fa0ef792c2e8';
+String _$userControllerHash() => r'79259ae8f2ed322642d34178916bbb6f7345efdd';
 
-/// Controller that manages [UserEntity] state for the user feature.
+/// Controller that manages [UserState] state for the user feature.
 
-abstract class _$UserController extends $AsyncNotifier<UserEntity> {
-  FutureOr<UserEntity> build();
+abstract class _$UserController extends $AsyncNotifier<UserState> {
+  FutureOr<UserState> build();
   @$mustCallSuper
   @override
   void runBuild() {
     final created = build();
-    final ref = this.ref as $Ref<AsyncValue<UserEntity>, UserEntity>;
+    final ref = this.ref as $Ref<AsyncValue<UserState>, UserState>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<AsyncValue<UserEntity>, UserEntity>,
-              AsyncValue<UserEntity>,
+              AnyNotifier<AsyncValue<UserState>, UserState>,
+              AsyncValue<UserState>,
               Object?,
               Object?
             >;

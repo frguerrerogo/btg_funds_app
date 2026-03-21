@@ -2,3 +2,4 @@
 library;
 
 export 'controllers/user_controller.dart';
+export 'controllers/user_state.dart';
