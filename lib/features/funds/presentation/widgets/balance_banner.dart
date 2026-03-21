@@ -39,7 +39,7 @@ class BalanceBanner extends StatelessWidget {
                   style: TextStyle(
                     color: AppColors.bannerLabel,
                     fontWeight: FontWeight.w700,
-                    fontSize: 13,
+                    fontSize: 14,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -62,7 +62,7 @@ class BalanceBanner extends StatelessWidget {
                 style: TextStyle(
                   color: AppColors.bannerLabel,
                   fontWeight: FontWeight.w700,
-                  fontSize: 12,
+                  fontSize: 13,
                 ),
               ),
               const SizedBox(height: 4),

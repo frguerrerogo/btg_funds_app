@@ -71,7 +71,7 @@ class AppErrorWidget extends StatelessWidget {
               child: Text(
                 message,
                 style: const TextStyle(
-                  fontSize: 14,
+                  fontSize: 15,
                   color: AppColors.error,
                 ),
               ),
@@ -88,7 +88,7 @@ class AppErrorWidget extends StatelessWidget {
                 ),
                 child: const Text(
                   'Reintentar',
-                  style: TextStyle(fontSize: 14),
+                  style: TextStyle(fontSize: 15),
                 ),
               ),
             ],
@@ -115,7 +115,7 @@ class AppErrorWidget extends StatelessWidget {
               message,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                fontSize: 17,
+                fontSize: 18,
                 color: AppColors.textPrimary,
               ),
             ),

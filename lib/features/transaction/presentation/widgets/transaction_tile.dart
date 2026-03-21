@@ -62,13 +62,13 @@ class TransactionTile extends StatelessWidget {
                   ),
                   Text(
                     transaction.fundName,
-                    style: const TextStyle(fontSize: 15),
+                    style: const TextStyle(fontSize: 16),
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
                     'Notificación: ${transaction.notificationMethod == NotificationMethod.email ? 'Email' : 'SMS'}',
                     style: TextStyle(
-                      fontSize: 13,
+                      fontSize: 14,
                       color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
                   ),
@@ -91,7 +91,7 @@ class TransactionTile extends StatelessWidget {
                 Text(
                   _formatDate(transaction.createdAt),
                   style: TextStyle(
-                    fontSize: 12,
+                    fontSize: 13,
                     fontWeight: FontWeight.w700,
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),

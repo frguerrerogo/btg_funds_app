@@ -54,7 +54,7 @@ class FundCard extends StatelessWidget {
                 Text(
                   'Monto mínimo: ${fund.minimumAmount.formatCOP()}',
                   style: TextStyle(
-                    fontSize: 15,
+                    fontSize: 16,
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
                 ),
@@ -62,7 +62,7 @@ class FundCard extends StatelessWidget {
             ),
             Align(
               child: SizedBox(
-                width: 130,
+                width: 140,
                 child: fund.isSubscribed
                     ? OutlinedButton.icon(
                         onPressed: onCancel,
@@ -119,7 +119,7 @@ class _CategoryBadge extends StatelessWidget {
       child: Text(
         isFpv ? 'FPV' : 'FIC',
         style: TextStyle(
-          fontSize: 12,
+          fontSize: 13,
           fontWeight: FontWeight.w500,
           color: isFpv ? AppColors.fpvText : AppColors.ficText,
         ),

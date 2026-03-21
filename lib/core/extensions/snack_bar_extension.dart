@@ -7,15 +7,27 @@ extension SnackBarExtension on BuildContext {
   void showSnackBar(
     String message, {
     Color backgroundColor = AppColors.grey,
-    Duration duration = const Duration(seconds: 3),
+    Duration duration = const Duration(seconds: 4),
     SnackBarBehavior behavior = SnackBarBehavior.floating,
   }) {
     ScaffoldMessenger.of(this).showSnackBar(
       SnackBar(
-        content: Text(message),
+        content: Text(
+          message,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+          ),
+        ),
         backgroundColor: backgroundColor,
         duration: duration,
         behavior: behavior,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        elevation: 6,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
       ),
     );
   }

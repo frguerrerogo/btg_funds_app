@@ -73,7 +73,7 @@ class AdaptiveScaffold extends StatelessWidget {
                       'BTG',
                       style: TextStyle(
                         color: AppColors.white,
-                        fontSize: 10,
+                        fontSize: 11,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

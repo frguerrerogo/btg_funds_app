@@ -37,7 +37,7 @@ class NotificationSelectorState extends State<NotificationSelector> {
       children: [
         const Text(
           'Notificación:',
-          style: TextStyle(fontSize: 14),
+          style: TextStyle(fontSize: 15),
         ),
         const SizedBox(width: 12),
         SegmentedButton<NotificationMethod>(

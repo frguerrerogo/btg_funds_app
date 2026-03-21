@@ -25,7 +25,7 @@ class AppTheme {
     navigationBarTheme: NavigationBarThemeData(
       indicatorColor: AppColors.fpvBg,
       labelTextStyle: WidgetStateProperty.all(
-        const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+        const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
       ),
     ),
     navigationRailTheme: const NavigationRailThemeData(
@@ -35,7 +35,7 @@ class AppTheme {
       selectedLabelTextStyle: TextStyle(
         color: AppColors.primary,
         fontWeight: FontWeight.w500,
-        fontSize: 12,
+        fontSize: 13,
       ),
     ),
     cardTheme: CardThemeData(

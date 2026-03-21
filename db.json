@@ -21,7 +21,7 @@
           "fund_id": "2",
           "fund_name": "FPV_BTG_PACTUAL_ECOPETROL",
           "amount": 125000,
-          "subscribed_at": "2026-03-21T01:57:45.475"
+          "subscribed_at": "2026-03-21T10:02:20.968"
         }
       ]
     }
@@ -121,6 +121,42 @@
       "type": "subscription",
       "notification_method": "email",
       "created_at": "2026-03-21T01:57:45.511"
+    },
+    {
+      "id": "89962260-6260-4abe-9f05-c0bfdc59b849",
+      "fund_id": "2",
+      "fund_name": "FPV_BTG_PACTUAL_ECOPETROL",
+      "amount": 125000,
+      "type": "cancellation",
+      "notification_method": "email",
+      "created_at": "2026-03-21T09:58:40.985"
+    },
+    {
+      "id": "090a62ba-4ab1-4a2d-9f81-9b64d52ab1a5",
+      "fund_id": "1",
+      "fund_name": "FPV_BTG_PACTUAL_RECAUDADORA",
+      "amount": 75000,
+      "type": "subscription",
+      "notification_method": "sms",
+      "created_at": "2026-03-21T10:02:05.365"
+    },
+    {
+      "id": "33a1fdc1-200f-4943-8ba7-9cbfe7808e2e",
+      "fund_id": "1",
+      "fund_name": "FPV_BTG_PACTUAL_RECAUDADORA",
+      "amount": 75000,
+      "type": "cancellation",
+      "notification_method": "sms",
+      "created_at": "2026-03-21T10:02:10.829"
+    },
+    {
+      "id": "3560fd8e-b964-44ed-acff-60e472c3bae1",
+      "fund_id": "2",
+      "fund_name": "FPV_BTG_PACTUAL_ECOPETROL",
+      "amount": 125000,
+      "type": "subscription",
+      "notification_method": "sms",
+      "created_at": "2026-03-21T10:02:21.034"
     }
   ]
 }
