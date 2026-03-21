@@ -1,6 +1,7 @@
 // lib/core/widgets/adaptive_scaffold.dart
 
 import 'package:btg_funds_app/app/router/app_routes.dart';
+import 'package:btg_funds_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -64,14 +65,14 @@ class AdaptiveScaffold extends StatelessWidget {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: const Color(0xFF003087),
+                    color: AppColors.primaryLight,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Center(
                     child: Text(
                       'BTG',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: AppColors.white,
                         fontSize: 10,
                         fontWeight: FontWeight.bold,
                       ),

@@ -1,5 +1,6 @@
+import 'package:btg_funds_app/core/extensions/currency_formatter.dart';
+import 'package:btg_funds_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 /// A header banner that shows the user's available balance.
 ///
@@ -18,21 +19,13 @@ class BalanceBanner extends StatelessWidget {
   /// Number of subscribed funds displayed as a summary.
   final int subscribedCount;
 
-  String _formatCOP(double amount) {
-    return NumberFormat.currency(
-      locale: 'es_CO',
-      symbol: r'COP $',
-      decimalDigits: 0,
-    ).format(amount);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFF003087),
+        color: AppColors.primaryLight,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -50,7 +43,7 @@ class BalanceBanner extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  _formatCOP(balance),
+                  balance.formatCOP(),
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 22,

@@ -1,7 +1,8 @@
 import 'package:btg_funds_app/core/core.dart'
     show
+        AppColors,
         AppConstants,
-        AppErrorBanner,
+        AppErrorWidget,
         ErrorMappingExtension,
         LoadingWidget,
         ResponsiveExtension,
@@ -62,7 +63,7 @@ class _FundsPageState extends ConsumerState<FundsPage> {
       ),
       body: state.when(
         loading: () => const LoadingWidget(),
-        error: (error, _) => AppErrorBanner(
+        error: (error, _) => AppErrorWidget(
           message: error.mapTechnicalErrorToMessage(),
           onRetry: () => ref.invalidate(fundsControllerProvider),
         ),
@@ -270,7 +271,7 @@ class _FundsPageState extends ConsumerState<FundsPage> {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red,
+                  backgroundColor: AppColors.error,
                 ),
                 onPressed: () => Navigator.pop(context, true),
                 child: const Text('Sí, cancelar'),

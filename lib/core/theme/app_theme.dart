@@ -1,19 +1,18 @@
+import 'package:btg_funds_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 /// Defines the global theme configuration for the application.
 class AppTheme {
   AppTheme._();
 
-  static const _primaryColor = Color(0xFF003377);
-
   /// Returns the light [ThemeData] for the application.
   static ThemeData get light => ThemeData(
     useMaterial3: true,
     colorScheme: ColorScheme.fromSeed(
-      seedColor: _primaryColor,
+      seedColor: AppColors.primary,
     ),
     appBarTheme: const AppBarTheme(
-      backgroundColor: _primaryColor,
+      backgroundColor: AppColors.primary,
       foregroundColor: Colors.white,
       elevation: 0,
       centerTitle: false,
@@ -27,9 +26,9 @@ class AppTheme {
     navigationRailTheme: const NavigationRailThemeData(
       backgroundColor: Colors.white,
       indicatorColor: Color(0xFFE6F1FB),
-      selectedIconTheme: IconThemeData(color: _primaryColor),
+      selectedIconTheme: IconThemeData(color: AppColors.primary),
       selectedLabelTextStyle: TextStyle(
-        color: _primaryColor,
+        color: AppColors.primary,
         fontWeight: FontWeight.w500,
         fontSize: 12,
       ),
@@ -44,7 +43,7 @@ class AppTheme {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: _primaryColor,
+        backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
@@ -66,7 +65,7 @@ class AppTheme {
   static ThemeData get dark => ThemeData(
     useMaterial3: true,
     colorScheme: ColorScheme.fromSeed(
-      seedColor: _primaryColor,
+      seedColor: AppColors.primary,
       brightness: Brightness.dark,
     ),
   );

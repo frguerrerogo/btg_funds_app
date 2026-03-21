@@ -1,6 +1,7 @@
+import 'package:btg_funds_app/core/extensions/currency_formatter.dart';
+import 'package:btg_funds_app/core/theme/app_colors.dart';
 import 'package:btg_funds_app/features/funds/domain/entities/fund_entity.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 /// A card that displays a fund summary with a primary action.
 ///
@@ -22,14 +23,6 @@ class FundCard extends StatelessWidget {
 
   /// Action invoked when the user chooses to cancel a subscription.
   final VoidCallback onCancel;
-
-  String _formatCOP(double amount) {
-    return NumberFormat.currency(
-      locale: 'es_CO',
-      symbol: r'COP $',
-      decimalDigits: 0,
-    ).format(amount);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +52,7 @@ class FundCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Monto mínimo: ${_formatCOP(fund.minimumAmount)}',
+                  'Monto mínimo: ${fund.minimumAmount.formatCOP()}',
                   style: TextStyle(
                     fontSize: 13,
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
@@ -120,7 +113,7 @@ class _CategoryBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: isFpv ? const Color(0xFFE6F1FB) : const Color(0xFFEAF3DE),
+        color: isFpv ? AppColors.fpvBg : AppColors.ficBg,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Text(
@@ -128,7 +121,7 @@ class _CategoryBadge extends StatelessWidget {
         style: TextStyle(
           fontSize: 11,
           fontWeight: FontWeight.w500,
-          color: isFpv ? const Color(0xFF0C447C) : const Color(0xFF27500A),
+          color: isFpv ? AppColors.fpvText : AppColors.ficText,
         ),
       ),
     );

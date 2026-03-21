@@ -1,3 +1,4 @@
+import 'package:btg_funds_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 /// A centered error message with an optional retry action.
@@ -26,7 +27,7 @@ class AppStateErrorWidget extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.error_outline, size: 48, color: Colors.red),
+            const Icon(Icons.error_outline, size: 48, color: AppColors.error),
             const SizedBox(height: 12),
             Text(
               message,

@@ -4,11 +4,13 @@ library;
 
 export 'constants/app_constants.dart';
 export 'di/di.dart';
+export 'extensions/currency_formatter.dart';
 export 'extensions/error_mapping_extension.dart';
 export 'extensions/responsive_extension.dart';
 export 'extensions/snack_bar_extension.dart';
 export 'network/network.dart';
 export 'providers/dio_client_provider.dart';
 export 'shared/mapper.dart';
+export 'theme/app_colors.dart';
 export 'theme/app_theme.dart';
 export 'widgets/widgets.dart';
