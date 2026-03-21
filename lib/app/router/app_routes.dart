@@ -1,6 +1,7 @@
-import 'package:btg_funds_app/core/widgets/adaptive_scaffold.dart';
-import 'package:btg_funds_app/features/funds/presentation/pages/funds_page.dart';
-import 'package:btg_funds_app/features/transaction/presentation/pages/history_page.dart';
+import 'package:btg_funds_app/core/core.dart' show AdaptiveScaffold;
+import 'package:btg_funds_app/features/funds/presentation/presentation.dart' show FundsPage;
+import 'package:btg_funds_app/features/transaction/presentation/presentation.dart'
+    show TransactionHistoryPage;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -41,13 +42,13 @@ class FundsRoute extends GoRouteData with $FundsRoute {
 }
 
 // HISTORY
-/// Route for [HistoryPage], displayed at `/history`.
+/// Route for [TransactionHistoryPage], displayed at `/history`.
 class HistoryRoute extends GoRouteData with $HistoryRoute {
   /// Creates a [HistoryRoute].
   const HistoryRoute();
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const HistoryPage();
+    return const TransactionHistoryPage();
   }
 }

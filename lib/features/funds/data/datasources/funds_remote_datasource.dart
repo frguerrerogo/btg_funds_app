@@ -1,5 +1,7 @@
+import 'package:btg_funds_app/core/core.dart' show DioExceptionMapper;
 import 'package:btg_funds_app/core/network/dio_client.dart';
 import 'package:btg_funds_app/features/funds/data/data.dart' show FundDto;
+import 'package:dio/dio.dart';
 
 /// Remote datasource interface for managing funds data.
 abstract class FundsRemoteDatasource {
@@ -21,13 +23,23 @@ class FundsRemoteDatasourceImpl implements FundsRemoteDatasource {
 
   @override
   Future<List<FundDto>> getFunds() async {
-    final response = await _dioClient.dio.get<List<dynamic>>(_fundsEndpoint);
-    return (response.data!).map((json) => FundDto.fromJson(json as Map<String, dynamic>)).toList();
+    try {
+      final response = await _dioClient.dio.get<List<dynamic>>(_fundsEndpoint);
+      return (response.data!)
+          .map((json) => FundDto.fromJson(json as Map<String, dynamic>))
+          .toList();
+    } on DioException catch (e) {
+      throw DioExceptionMapper.map(e);
+    }
   }
 
   @override
   Future<FundDto> getFundById(String id) async {
-    final response = await _dioClient.dio.get<Map<String, dynamic>>('$_fundsEndpoint/$id');
-    return FundDto.fromJson(response.data!);
+    try {
+      final response = await _dioClient.dio.get<Map<String, dynamic>>('$_fundsEndpoint/$id');
+      return FundDto.fromJson(response.data!);
+    } on DioException catch (e) {
+      throw DioExceptionMapper.map(e);
+    }
   }
 }

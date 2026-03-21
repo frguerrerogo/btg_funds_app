@@ -3,6 +3,7 @@
 library;
 
 export 'dio_client.dart';
+export 'dio_exception_mapper.dart';
 export 'exceptions/network_exception.dart';
 export 'exceptions/server_exception.dart';
 export 'exceptions/timeout_exception.dart';

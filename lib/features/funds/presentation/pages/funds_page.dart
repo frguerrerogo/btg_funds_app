@@ -2,12 +2,10 @@ import 'package:btg_funds_app/core/core.dart'
     show
         AppConstants,
         AppErrorBanner,
+        ErrorMappingExtension,
         LoadingWidget,
-        NetworkException,
         ResponsiveExtension,
-        ServerException,
-        SnackBarExtension,
-        TimeoutException;
+        SnackBarExtension;
 import 'package:btg_funds_app/features/funds/domain/domain.dart'
     show
         AlreadySubscribedException,
@@ -64,29 +62,13 @@ class _FundsPageState extends ConsumerState<FundsPage> {
       ),
       body: state.when(
         loading: () => const LoadingWidget(),
-        error: (error, _) => _buildErrorState(error),
+        error: (error, _) => AppErrorBanner(
+          message: error.mapTechnicalErrorToMessage(),
+          onRetry: () => ref.invalidate(fundsControllerProvider),
+        ),
         data: _buildContent,
       ),
     );
-  }
-
-  Widget _buildErrorState(Object error) {
-    return AppErrorBanner(
-      message: _mapTechnicalErrorToMessage(error),
-      onRetry: () => ref.invalidate(fundsControllerProvider),
-    );
-  }
-
-  String _mapTechnicalErrorToMessage(Object error) {
-    if (error is TimeoutException || error is NetworkException) {
-      return 'Revisa tu conexión a internet';
-    }
-
-    if (error is ServerException) {
-      return 'Error del servidor. Intenta más tarde';
-    }
-
-    return 'Ocurrió un error inesperado';
   }
 
   Widget _buildContent(FundsState fundsState) {

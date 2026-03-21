@@ -19,49 +19,52 @@ class AppErrorBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.all(16),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: BoxDecoration(
-        color: const Color(0xFFFCEBEB),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: const Color(0xFFF09595),
-          width: 0.5,
-        ),
-      ),
-      child: Row(
-        children: [
-          const Icon(
-            Icons.error_outline,
-            color: Color(0xFFA32D2D),
-            size: 20,
+    return Center(
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: 500),
+        margin: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        decoration: BoxDecoration(
+          color: const Color(0xFFFCEBEB),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: const Color(0xFFF09595),
+            width: 0.5,
           ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Text(
-              message,
-              style: const TextStyle(
-                fontSize: 13,
-                color: Color(0xFFA32D2D),
+        ),
+        child: Row(
+          children: [
+            const Icon(
+              Icons.error_outline,
+              color: Color(0xFFA32D2D),
+              size: 20,
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                message,
+                style: const TextStyle(
+                  fontSize: 13,
+                  color: Color(0xFFA32D2D),
+                ),
               ),
             ),
-          ),
-          const SizedBox(width: 8),
-          TextButton(
-            onPressed: onRetry,
-            style: TextButton.styleFrom(
-              foregroundColor: const Color(0xFFA32D2D),
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              visualDensity: VisualDensity.compact,
+            const SizedBox(width: 8),
+            TextButton(
+              onPressed: onRetry,
+              style: TextButton.styleFrom(
+                backgroundColor: const Color(0xFFA32D2D),
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                visualDensity: VisualDensity.compact,
+              ),
+              child: const Text(
+                'Reintentar',
+                style: TextStyle(fontSize: 13),
+              ),
             ),
-            child: const Text(
-              'Reintentar',
-              style: TextStyle(fontSize: 13),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

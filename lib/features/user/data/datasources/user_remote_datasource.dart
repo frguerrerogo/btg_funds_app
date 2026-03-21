@@ -1,6 +1,7 @@
-import 'package:btg_funds_app/core/core.dart' show AppConstants;
+import 'package:btg_funds_app/core/core.dart' show AppConstants, DioExceptionMapper;
 import 'package:btg_funds_app/core/network/dio_client.dart';
 import 'package:btg_funds_app/features/user/data/data.dart' show ActiveSubscriptionDto, UserDto;
+import 'package:dio/dio.dart';
 
 /// Remote datasource interface for managing user data.
 abstract class UserRemoteDatasource {
@@ -28,46 +29,62 @@ class UserRemoteDatasourceImpl implements UserRemoteDatasource {
 
   @override
   Future<UserDto> getUser() async {
-    final response = await _dioClient.dio.get<Map<String, dynamic>>(
-      '$_userEndpoint/${AppConstants.userId}',
-    );
-    return UserDto.fromJson(response.data!);
+    try {
+      final response = await _dioClient.dio.get<Map<String, dynamic>>(
+        '$_userEndpoint/${AppConstants.userId}',
+      );
+      return UserDto.fromJson(response.data!);
+    } on DioException catch (e) {
+      throw DioExceptionMapper.map(e);
+    }
   }
 
   @override
   Future<UserDto> updateBalance(double newBalance) async {
-    final response = await _dioClient.dio.patch<Map<String, dynamic>>(
-      '$_userEndpoint/${AppConstants.userId}',
-      data: {'balance': newBalance},
-    );
-    return UserDto.fromJson(response.data!);
+    try {
+      final response = await _dioClient.dio.patch<Map<String, dynamic>>(
+        '$_userEndpoint/${AppConstants.userId}',
+        data: {'balance': newBalance},
+      );
+      return UserDto.fromJson(response.data!);
+    } on DioException catch (e) {
+      throw DioExceptionMapper.map(e);
+    }
   }
 
   @override
   Future<UserDto> addActiveSubscription(ActiveSubscriptionDto subscription) async {
-    final user = await getUser();
-    final updatedSubscriptions = [
-      ...user.activeSubscriptions.map((s) => s.toJson()),
-      subscription.toJson(),
-    ];
-    final response = await _dioClient.dio.patch<Map<String, dynamic>>(
-      '$_userEndpoint/${AppConstants.userId}',
-      data: {'active_subscriptions': updatedSubscriptions},
-    );
-    return UserDto.fromJson(response.data!);
+    try {
+      final user = await getUser();
+      final updatedSubscriptions = [
+        ...user.activeSubscriptions.map((s) => s.toJson()),
+        subscription.toJson(),
+      ];
+      final response = await _dioClient.dio.patch<Map<String, dynamic>>(
+        '$_userEndpoint/${AppConstants.userId}',
+        data: {'active_subscriptions': updatedSubscriptions},
+      );
+      return UserDto.fromJson(response.data!);
+    } on DioException catch (e) {
+      throw DioExceptionMapper.map(e);
+    }
   }
 
   @override
   Future<UserDto> removeActiveSubscription(String fundId) async {
-    final user = await getUser();
-    final updatedSubscriptions = user.activeSubscriptions
-        .where((s) => s.fundId != fundId)
-        .map((s) => s.toJson())
-        .toList();
-    final response = await _dioClient.dio.patch<Map<String, dynamic>>(
-      '$_userEndpoint/${AppConstants.userId}',
-      data: {'active_subscriptions': updatedSubscriptions},
-    );
-    return UserDto.fromJson(response.data!);
+    try {
+      final user = await getUser();
+      final updatedSubscriptions = user.activeSubscriptions
+          .where((s) => s.fundId != fundId)
+          .map((s) => s.toJson())
+          .toList();
+      final response = await _dioClient.dio.patch<Map<String, dynamic>>(
+        '$_userEndpoint/${AppConstants.userId}',
+        data: {'active_subscriptions': updatedSubscriptions},
+      );
+      return UserDto.fromJson(response.data!);
+    } on DioException catch (e) {
+      throw DioExceptionMapper.map(e);
+    }
   }
 }
