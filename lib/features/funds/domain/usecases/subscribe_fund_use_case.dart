@@ -1,32 +1,29 @@
 import 'package:btg_funds_app/features/funds/domain/domain.dart'
-    show AlreadySubscribedException, FundEntity, FundsRepository, InsufficientBalanceException;
-import 'package:btg_funds_app/features/user/domain/domain.dart'
-    show ActiveSubscriptionEntity, UserRepository;
+    show AlreadySubscribedException, InsufficientBalanceException;
+import 'package:btg_funds_app/features/user/domain/domain.dart' show UserEntity, UserRepository;
+import 'package:btg_funds_app/features/user/domain/entities/active_subscription_entity.dart'
+    show ActiveSubscriptionEntity;
 
 /// Use case that subscribes a user to a fund.
 ///
-/// Depends on [FundsRepository] for fund data and [UserRepository] for user account updates.
+/// Depends on [UserRepository] for user account updates.
 class SubscribeFundUseCase {
-  /// Creates a [SubscribeFundUseCase] with [fundsRepository] and [userRepository].
+  /// Creates a [SubscribeFundUseCase] with [userRepository].
   const SubscribeFundUseCase({
-    required FundsRepository fundsRepository,
     required UserRepository userRepository,
-  }) : _fundsRepository = fundsRepository,
-       _userRepository = userRepository;
+  }) : _userRepository = userRepository;
 
-  final FundsRepository _fundsRepository;
   final UserRepository _userRepository;
 
   /// Subscribes the user to the fund identified by [fundId] with [name] and [minimumAmount].
-  /// Returns a [FundEntity] reflecting the subscribed fund.
+  /// Returns a [UserEntity] with the updated subscription and balance.
   /// Throws [AlreadySubscribedException] if the user is already subscribed, or [InsufficientBalanceException] if the user has insufficient balance.
-  Future<FundEntity> execute({
+  Future<UserEntity> execute({
+    required UserEntity user,
     required String fundId,
     required String name,
     required double minimumAmount,
   }) async {
-    final user = await _userRepository.getUser();
-
     // Validation based on user activeSubscriptions
     if (user.isSubscribedToFund(fundId)) {
       throw const AlreadySubscribedException();
@@ -38,7 +35,7 @@ class SubscribeFundUseCase {
 
     final newBalance = user.balance - minimumAmount;
     await _userRepository.updateBalance(newBalance);
-    await _userRepository.addActiveSubscription(
+    final updatedUser = await _userRepository.addActiveSubscription(
       ActiveSubscriptionEntity(
         fundId: fundId,
         fundName: name,
@@ -47,6 +44,6 @@ class SubscribeFundUseCase {
       ),
     );
 
-    return _fundsRepository.getFundById(fundId);
+    return updatedUser;
   }
 }

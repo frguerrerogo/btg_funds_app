@@ -17,7 +17,6 @@ import 'package:uuid/uuid.dart';
 part 'funds_controller.g.dart';
 
 /// Controller that manages [FundsState] state for the funds feature.
-/// Handles fund subscriptions, cancellations, and synchronizes subscription status with user data.
 @riverpod
 class FundsController extends _$FundsController {
   late GetFundsUseCase _getFundsUseCase;
@@ -58,35 +57,22 @@ class FundsController extends _$FundsController {
     );
   }
 
-  /// Refreshes user data and updates fund subscription status without reloading funds.
-  Future<FundsState> _refreshUserState() async {
-    if (state is! AsyncData<FundsState>) {
-      return _loadState();
-    }
-
-    final currentState = (state as AsyncData<FundsState>).value;
-    final user = currentState.user;
-    final updatedFunds = currentState.funds
-        .map((fund) => fund.copyWith(isSubscribed: user.isSubscribedToFund(fund.id)))
-        .toList();
-
-    return FundsState(
-      funds: updatedFunds,
-      user: user,
-    );
-  }
-
-  /// Subscribes the user to a fund with the specified [fundId] and [minimumAmount].
-  /// Saves the transaction and refreshes the funds list with updated subscription status.
+  /// Subscribes the user to a fund with the specified [fundId], [name], and [minimumAmount].
+  /// Saves the subscription transaction and updates the fund subscription status.
   Future<void> subscribeFund({
     required String fundId,
     required String name,
     required double minimumAmount,
     required NotificationMethod notificationMethod,
   }) async {
+    if (!ref.mounted) return;
+
+    final currentState = await future;
+
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
-      await _subscribeFundUseCase.execute(
+      final updatedUser = await _subscribeFundUseCase.execute(
+        user: currentState.user,
         fundId: fundId,
         name: name,
         minimumAmount: minimumAmount,
@@ -104,21 +90,32 @@ class FundsController extends _$FundsController {
         ),
       );
 
-      return _refreshUserState();
+      final updatedFunds = currentState.funds.map((fund) {
+        if (fund.id == fundId) {
+          return fund.copyWith(isSubscribed: true);
+        }
+        return fund;
+      }).toList();
+
+      return currentState.copyWith(user: updatedUser, funds: updatedFunds);
     });
   }
 
-  /// Cancels the user's subscription to a fund identified by [fundId].
-  /// Saves the cancellation transaction and refreshes the funds list with updated subscription status.
+  /// Cancels the user's subscription to the fund identified by [fundId].
+  /// Saves the cancellation transaction and updates the fund subscription status.
   Future<void> cancelFund({
     required String fundId,
     required String fundName,
     required double amount,
     required NotificationMethod notificationMethod,
   }) async {
+    if (!ref.mounted) return;
+
+    final currentState = await future;
+
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
-      await _cancelFundUseCase.execute(fundId: fundId);
+      final updatedUser = await _cancelFundUseCase.execute(user: currentState.user, fundId: fundId);
 
       await _saveTransactionUseCase.execute(
         TransactionEntity(
@@ -131,8 +128,14 @@ class FundsController extends _$FundsController {
           createdAt: DateTime.now(),
         ),
       );
+      final updatedFunds = currentState.funds.map((fund) {
+        if (fund.id == fundId) {
+          return fund.copyWith(isSubscribed: true);
+        }
+        return fund;
+      }).toList();
 
-      return _refreshUserState();
+      return currentState.copyWith(user: updatedUser, funds: updatedFunds);
     });
   }
 }

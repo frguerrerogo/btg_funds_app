@@ -35,7 +35,6 @@ final getFundsUseCaseProvider = Provider<GetFundsUseCase>((ref) {
 /// Provider for [SubscribeFundUseCase].
 final subscribeFundUseCaseProvider = Provider<SubscribeFundUseCase>((ref) {
   return SubscribeFundUseCase(
-    fundsRepository: ref.read(fundsRepositoryProvider),
     userRepository: ref.read(userRepositoryProvider),
   );
 });
@@ -43,7 +42,6 @@ final subscribeFundUseCaseProvider = Provider<SubscribeFundUseCase>((ref) {
 /// Provider for [CancelFundUseCase].
 final cancelFundUseCaseProvider = Provider<CancelFundUseCase>((ref) {
   return CancelFundUseCase(
-    fundsRepository: ref.read(fundsRepositoryProvider),
     userRepository: ref.read(userRepositoryProvider),
   );
 });

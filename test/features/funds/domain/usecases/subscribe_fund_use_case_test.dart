@@ -1,18 +1,16 @@
+// test/features/funds/domain/usecases/subscribe_fund_use_case_test.dart
+
 import 'package:btg_funds_app/features/funds/domain/domain.dart'
     show
         AlreadySubscribedException,
         FundCategory,
         FundEntity,
-        FundsRepository,
         InsufficientBalanceException,
         SubscribeFundUseCase;
 import 'package:btg_funds_app/features/user/domain/domain.dart'
     show ActiveSubscriptionEntity, UserEntity, UserRepository;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-
-/// Mock implementation of [FundsRepository] for testing purposes.
-class MockFundsRepository extends Mock implements FundsRepository {}
 
 /// Mock implementation of [UserRepository] for testing purposes.
 class MockUserRepository extends Mock implements UserRepository {}
@@ -23,9 +21,6 @@ class FakeActiveSubscriptionEntity extends Fake implements ActiveSubscriptionEnt
 void main() {
   /// The system under test: [SubscribeFundUseCase].
   late SubscribeFundUseCase sut;
-
-  /// Mock of [FundsRepository] injected into [sut].
-  late MockFundsRepository mockFundsRepository;
 
   /// Mock of [UserRepository] injected into [sut].
   late MockUserRepository mockUserRepository;
@@ -60,15 +55,28 @@ void main() {
     ],
   );
 
+  /// [UserEntity] fixture with updated balance after subscription.
+  final tUserUpdated = UserEntity(
+    id: '1',
+    name: 'BTG User',
+    balance: 425000,
+    activeSubscriptions: [
+      ActiveSubscriptionEntity(
+        fundId: '1',
+        fundName: 'FPV_BTG_PACTUAL_RECAUDADORA',
+        amount: 75000,
+        subscribedAt: DateTime.parse('2024-01-01T00:00:00.000'),
+      ),
+    ],
+  );
+
   setUpAll(() {
     registerFallbackValue(FakeActiveSubscriptionEntity());
   });
 
   setUp(() {
-    mockFundsRepository = MockFundsRepository();
     mockUserRepository = MockUserRepository();
     sut = SubscribeFundUseCase(
-      fundsRepository: mockFundsRepository,
       userRepository: mockUserRepository,
     );
   });
@@ -76,18 +84,19 @@ void main() {
   group('SubscribeFundUseCase', () {
     group('when balance is sufficient', () {
       setUp(() {
-        when(() => mockUserRepository.getUser()).thenAnswer((_) async => tUser);
-        when(() => mockFundsRepository.getFundById('1')).thenAnswer((_) async => tFund);
         when(
           () => mockUserRepository.updateBalance(425000),
         ).thenAnswer((_) async => tUser.copyWith(balance: 425000));
-        when(() => mockUserRepository.addActiveSubscription(any())).thenAnswer((_) async => tUser);
+        when(
+          () => mockUserRepository.addActiveSubscription(any()),
+        ).thenAnswer((_) async => tUserUpdated);
       });
 
       test('should update user balance after subscription', () async {
         // act
         await sut.execute(
-          fundId: '1',
+          user: tUser,
+          fundId: tFund.id,
           name: tFund.name,
           minimumAmount: tFund.minimumAmount,
         );
@@ -99,7 +108,8 @@ void main() {
       test('should add active subscription to user', () async {
         // act
         await sut.execute(
-          fundId: '1',
+          user: tUser,
+          fundId: tFund.id,
           name: tFund.name,
           minimumAmount: tFund.minimumAmount,
         );
@@ -108,16 +118,19 @@ void main() {
         verify(() => mockUserRepository.addActiveSubscription(any())).called(1);
       });
 
-      test('should call getFundById after subscription', () async {
+      test('should return updated user with subscription', () async {
         // act
-        await sut.execute(
-          fundId: '1',
+        final result = await sut.execute(
+          user: tUser,
+          fundId: tFund.id,
           name: tFund.name,
           minimumAmount: tFund.minimumAmount,
         );
 
         // assert
-        verify(() => mockFundsRepository.getFundById('1')).called(1);
+        expect(result.balance, 425000);
+        expect(result.activeSubscriptions.length, 1);
+        expect(result.activeSubscriptions.first.fundId, '1');
       });
     });
 
@@ -125,12 +138,12 @@ void main() {
       test('should throw InsufficientBalanceException', () async {
         // arrange
         final userWithLowBalance = tUser.copyWith(balance: 50000);
-        when(() => mockUserRepository.getUser()).thenAnswer((_) async => userWithLowBalance);
 
         // act & assert
         expect(
           () => sut.execute(
-            fundId: '1',
+            user: userWithLowBalance,
+            fundId: tFund.id,
             name: tFund.name,
             minimumAmount: tFund.minimumAmount,
           ),
@@ -141,13 +154,11 @@ void main() {
 
     group('when fund is already subscribed', () {
       test('should throw AlreadySubscribedException', () async {
-        // arrange
-        when(() => mockUserRepository.getUser()).thenAnswer((_) async => tUserAlreadySubscribed);
-
         // act & assert
         expect(
           () => sut.execute(
-            fundId: '1',
+            user: tUserAlreadySubscribed,
+            fundId: tFund.id,
             name: tFund.name,
             minimumAmount: tFund.minimumAmount,
           ),
