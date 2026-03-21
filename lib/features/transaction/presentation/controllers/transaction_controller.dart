@@ -20,8 +20,10 @@ class TransactionController extends _$TransactionController {
 
   /// Loads transaction history from the server.
   Future<TransactionState> _loadState() async {
-    final transactions = await _getHistoryUseCase.execute();
-    return TransactionState(transactions: transactions);
+    final transactionsList = await _getHistoryUseCase.execute();
+    // Ordenar por fecha descendente (más recientes primero)
+    transactionsList.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+    return TransactionState(transactions: transactionsList);
   }
 
   /// Refreshes the transaction history from the server.
