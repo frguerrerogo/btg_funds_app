@@ -12,16 +12,10 @@ Aplicación móvil Flutter para la gestión de fondos de inversión (FPV/FIC) de
 
 ## 🎬 Demo
 
-<img src="assets/videos/demo.gif" alt="BTG Funds App Demo" width="300"/>
+<img src="assets/videos/demo.gif" alt="BTG Funds App Demo" width="500"/>
 
 **Opciones disponibles:**
 - 🔊 [Ver con audio en Drive](https://drive.google.com/file/d/1MutgGbjhcfMTjwCcsVVGxCnR99k6LQZS/view?usp=sharing)
-
-**Funcionalidades mostradas:**
-- ✅ Visualización de fondos disponibles
-- ✅ Detalles y rentabilidad de inversiones
-- ✅ Historial de transacciones
-- ✅ Gestión de perfil de usuario
 
 ## 🛠 Requisitos Previos
 
