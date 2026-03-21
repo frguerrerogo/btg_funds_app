@@ -58,9 +58,26 @@ class FundsController extends _$FundsController {
     );
   }
 
+  /// Refreshes user data and updates fund subscription status without reloading funds.
+  Future<FundsState> _refreshUserState() async {
+    if (state is! AsyncData<FundsState>) {
+      return _loadState();
+    }
+
+    final currentState = (state as AsyncData<FundsState>).value;
+    final user = currentState.user;
+    final updatedFunds = currentState.funds
+        .map((fund) => fund.copyWith(isSubscribed: user.isSubscribedToFund(fund.id)))
+        .toList();
+
+    return FundsState(
+      funds: updatedFunds,
+      user: user,
+    );
+  }
+
   /// Subscribes the user to a fund with the specified [fundId] and [minimumAmount].
   /// Saves the transaction and refreshes the funds list with updated subscription status.
-
   Future<void> subscribeFund({
     required String fundId,
     required String name,
@@ -87,13 +104,12 @@ class FundsController extends _$FundsController {
         ),
       );
 
-      return _loadState();
-
-      /// Cancels the user's subscription to a fund identified by [fundId].
-      /// Saves the cancellation transaction and refreshes the funds list with updated subscription status.
+      return _refreshUserState();
     });
   }
 
+  /// Cancels the user's subscription to a fund identified by [fundId].
+  /// Saves the cancellation transaction and refreshes the funds list with updated subscription status.
   Future<void> cancelFund({
     required String fundId,
     required String fundName,
@@ -116,7 +132,7 @@ class FundsController extends _$FundsController {
         ),
       );
 
-      return _loadState();
+      return _refreshUserState();
     });
   }
 }

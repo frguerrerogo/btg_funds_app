@@ -33,7 +33,7 @@ final userMapperProvider = Provider<UserMapper>((ref) {
 /// Provider for [UserRepository], backed by [UserRepositoryImpl].
 final userRepositoryProvider = Provider<UserRepository>((ref) {
   return UserRepositoryImpl(
-    userSatasource: ref.read(userRemoteDatasourceProvider),
+    userDatasource: ref.read(userRemoteDatasourceProvider),
     userMapper: ref.read(userMapperProvider),
     activeSubscriptionMapper: ref.read(activeSubscriptionMapperProvider),
   );
