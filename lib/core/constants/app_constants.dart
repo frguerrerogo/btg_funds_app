@@ -12,4 +12,8 @@ class AppConstants {
 
   /// Default user identifier used in API requests and user-specific operations.
   static const String userId = '07FG';
+
+  /// Time window for deduplicating error messages in milliseconds.
+  /// Prevents showing the same error snackbar multiple times within this duration.
+  static const Duration errorDeduplicationWindow = Duration(milliseconds: 500);
 }

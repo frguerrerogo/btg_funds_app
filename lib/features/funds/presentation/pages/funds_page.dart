@@ -1,5 +1,6 @@
 import 'package:btg_funds_app/core/core.dart'
     show
+        AppConstants,
         AppErrorBanner,
         LoadingWidget,
         NetworkException,
@@ -25,9 +26,10 @@ import 'package:btg_funds_app/features/transaction/domain/domain.dart' show Noti
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// A funds browsing screen with fund cards and subscription actions.
+/// Displays a browsing interface for available investment funds.
 ///
-/// Provides the main UI for managing fund subscriptions and cancellations.
+/// Allows users to subscribe to and manage their fund subscriptions with balance
+/// information and real-time error handling for business operations.
 class FundsPage extends ConsumerStatefulWidget {
   /// Creates a [FundsPage].
   const FundsPage({super.key});
@@ -36,10 +38,11 @@ class FundsPage extends ConsumerStatefulWidget {
   ConsumerState<FundsPage> createState() => _FundsPageState();
 }
 
-/// Manages the state and error handling for the funds browsing interface.
+/// Manages the state, error handling, and user interactions for the funds browsing interface.
 class _FundsPageState extends ConsumerState<FundsPage> {
   late NotificationMethod _notificationMethod;
-  Object? _lastShownError;
+
+  String? _lastErrorMessage;
   DateTime? _lastErrorTime;
 
   @override
@@ -48,45 +51,9 @@ class _FundsPageState extends ConsumerState<FundsPage> {
     _notificationMethod = NotificationMethod.email;
   }
 
-  static const _errorDeduplicationWindow = Duration(milliseconds: 500);
-
   @override
   Widget build(BuildContext context) {
-    ref.listen<AsyncValue<FundsState>>(
-      fundsControllerProvider,
-      (previous, next) {
-        if (!next.hasError) {
-          _lastShownError = null;
-          return;
-        }
-
-        final error = next.error;
-
-        final now = DateTime.now();
-        if (_lastShownError == error &&
-            _lastErrorTime != null &&
-            now.difference(_lastErrorTime!) < _errorDeduplicationWindow) {
-          return;
-        }
-
-        if (error is InsufficientBalanceException ||
-            error is AlreadySubscribedException ||
-            error is NotSubscribedException) {
-          _lastShownError = error;
-          _lastErrorTime = now;
-          if (mounted) {
-            final message = switch (error) {
-              InsufficientBalanceException() =>
-                'No cuenta con el saldo disponible para vincularse al fondo',
-              AlreadySubscribedException() => 'Ya se encuentra suscrito a este fondo',
-              NotSubscribedException() => 'No se encuentra suscrito a este fondo',
-              _ => '',
-            };
-            context.showErrorSnackBar(message);
-          }
-        }
-      },
-    );
+    _setupErrorListener();
 
     final state = ref.watch(fundsControllerProvider);
 
@@ -97,24 +64,29 @@ class _FundsPageState extends ConsumerState<FundsPage> {
       ),
       body: state.when(
         loading: () => const LoadingWidget(),
-        error: (error, _) => _buildErrorState(context, error),
+        error: (error, _) => _buildErrorState(error),
         data: _buildContent,
       ),
     );
   }
 
-  Widget _buildErrorState(BuildContext context, Object error) {
-    final message = switch (error) {
-      TimeoutException(:final message) => message,
-      ServerException(:final message) => message,
-      NetworkException(:final message) => message,
-      _ => 'Error desconocido. Intente de nuevo.',
-    };
-
+  Widget _buildErrorState(Object error) {
     return AppErrorBanner(
-      message: message,
+      message: _mapTechnicalErrorToMessage(error),
       onRetry: () => ref.invalidate(fundsControllerProvider),
     );
+  }
+
+  String _mapTechnicalErrorToMessage(Object error) {
+    if (error is TimeoutException || error is NetworkException) {
+      return 'Revisa tu conexión a internet';
+    }
+
+    if (error is ServerException) {
+      return 'Error del servidor. Intenta más tarde';
+    }
+
+    return 'Ocurrió un error inesperado';
   }
 
   Widget _buildContent(FundsState fundsState) {
@@ -125,7 +97,10 @@ class _FundsPageState extends ConsumerState<FundsPage> {
         return CustomScrollView(
           slivers: [
             SliverPadding(
-              padding: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: 16),
+              padding: EdgeInsets.symmetric(
+                horizontal: horizontalPadding,
+                vertical: 16,
+              ),
               sliver: SliverToBoxAdapter(
                 child: BalanceBanner(
                   balance: fundsState.user.balance,
@@ -133,36 +108,27 @@ class _FundsPageState extends ConsumerState<FundsPage> {
                 ),
               ),
             ),
+
             if (fundsState.funds.isEmpty)
               SliverFillRemaining(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
                   child: const Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.account_balance_outlined,
-                          size: 48,
-                          color: Colors.grey,
-                        ),
-                        SizedBox(height: 12),
-                        Text(
-                          'No hay fondos disponibles',
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                      ],
-                    ),
+                    child: Text('No hay fondos disponibles'),
                   ),
                 ),
               )
             else
               SliverPadding(
-                padding: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: 16),
+                padding: EdgeInsets.symmetric(
+                  horizontal: horizontalPadding,
+                  vertical: 16,
+                ),
                 sliver: SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
                       final fund = fundsState.funds[index];
+
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 12),
                         child: SizedBox(
@@ -185,6 +151,52 @@ class _FundsPageState extends ConsumerState<FundsPage> {
     );
   }
 
+  void _setupErrorListener() {
+    ref.listen<AsyncValue<FundsState>>(
+      fundsControllerProvider,
+      (previous, next) {
+        if (!next.hasError) return;
+
+        final error = next.error;
+        final message = _mapBusinessErrorToMessage(error);
+
+        if (message == null) return;
+
+        final now = DateTime.now();
+
+        final isDuplicate =
+            _lastErrorMessage == message &&
+            _lastErrorTime != null &&
+            now.difference(_lastErrorTime!) < AppConstants.errorDeduplicationWindow;
+
+        if (isDuplicate) return;
+
+        _lastErrorMessage = message;
+        _lastErrorTime = now;
+
+        if (mounted) {
+          context.showErrorSnackBar(message);
+        }
+      },
+    );
+  }
+
+  String? _mapBusinessErrorToMessage(Object? error) {
+    if (error is InsufficientBalanceException) {
+      return 'No cuenta con saldo suficiente';
+    }
+
+    if (error is AlreadySubscribedException) {
+      return 'Ya está suscrito a este fondo';
+    }
+
+    if (error is NotSubscribedException) {
+      return 'No está suscrito a este fondo';
+    }
+
+    return null;
+  }
+
   Future<void> _onSubscribe(FundEntity fund) async {
     final confirmed = await _showSubscribeDialog(fund);
     if (!confirmed) return;
@@ -199,7 +211,9 @@ class _FundsPageState extends ConsumerState<FundsPage> {
         );
 
     if (mounted && success) {
-      context.showSuccessSnackBar('Suscripción a ${fund.name} exitosa');
+      context.showSuccessSnackBar(
+        'Suscripción a ${fund.name} exitosa',
+      );
     }
   }
 
@@ -217,7 +231,9 @@ class _FundsPageState extends ConsumerState<FundsPage> {
         );
 
     if (mounted && success) {
-      context.showSuccessSnackBar('Cancelación de ${fund.name} exitosa');
+      context.showSuccessSnackBar(
+        'Cancelación de ${fund.name} exitosa',
+      );
     }
   }
 
@@ -230,7 +246,6 @@ class _FundsPageState extends ConsumerState<FundsPage> {
             title: const Text('Confirmar suscripción'),
             content: Column(
               mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('¿Desea suscribirse a ${fund.name}?'),
                 const SizedBox(height: 16),
@@ -264,7 +279,7 @@ class _FundsPageState extends ConsumerState<FundsPage> {
           builder: (context) => AlertDialog(
             title: const Text('Cancelar suscripción'),
             content: Text(
-              '¿Está seguro que desea cancelar su suscripción a ${fund.name}?',
+              '¿Seguro que deseas cancelar ${fund.name}?',
             ),
             actions: [
               TextButton(
