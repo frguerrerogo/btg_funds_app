@@ -4,6 +4,7 @@ library;
 
 export 'constants/app_constants.dart';
 export 'di/di.dart';
+export 'extensions/snack_bar_extension.dart';
 export 'network/network.dart';
 export 'providers/dio_client_provider.dart';
 export 'shared/mapper.dart';

@@ -4,5 +4,7 @@ library;
 
 export 'dio_client.dart';
 export 'exceptions/network_exception.dart';
+export 'exceptions/server_exception.dart';
+export 'exceptions/timeout_exception.dart';
 export 'interceptors/error_interceptor.dart';
 export 'interceptors/logging_interceptor.dart';

@@ -1,13 +1,11 @@
-/// Exception thrown when network errors occur during HTTP communication.
+/// Exception thrown when network connectivity or communication fails.
 ///
-/// Thrown by the error interceptor for timeouts, bad responses, and other
-/// network failures. Implements [Exception] to integrate with Dart's error
-/// handling system.
+/// Raised in the network layer when HTTP requests encounter network-level errors.
 class NetworkException implements Exception {
-  /// Creates a [NetworkException] with the given error [message].
+  /// Creates a [NetworkException] with the given [message].
   const NetworkException(this.message);
 
-  /// A user-friendly description of the network error.
+  /// The error message describing the network failure.
   final String message;
 
   /// Returns a string representation including the [message].
