@@ -13,13 +13,13 @@ class HistoryPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final historyState = ref.watch(transactionControllerProvider);
+    final state = ref.watch(transactionControllerProvider);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Historial de transacciones')),
-      body: historyState.when(
-        data: (transactions) {
-          if (transactions.isEmpty) {
+      body: state.when(
+        data: (historyState) {
+          if (historyState.transactions.isEmpty) {
             return const Center(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -37,9 +37,9 @@ class HistoryPage extends ConsumerWidget {
 
           return ListView.builder(
             padding: const EdgeInsets.all(16),
-            itemCount: transactions.length,
+            itemCount: historyState.transactions.length,
             itemBuilder: (context, index) => TransactionTile(
-              transaction: transactions[index],
+              transaction: historyState.transactions[index],
             ),
           );
         },
