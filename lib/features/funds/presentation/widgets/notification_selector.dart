@@ -4,19 +4,32 @@ import 'package:flutter/material.dart';
 /// A segmented control for choosing a notification method.
 ///
 /// Provides a simple UI for selecting how the user wants to be notified.
-class NotificationSelector extends StatelessWidget {
-  /// Creates a [NotificationSelector] with the given [selected] and [onChanged].
+class NotificationSelector extends StatefulWidget {
+  /// Creates a [NotificationSelector] with an optional initial [initialMethod].
   const NotificationSelector({
-    required this.selected,
-    required this.onChanged,
+    this.initialMethod = NotificationMethod.email,
     super.key,
   });
 
-  /// Currently selected [NotificationMethod] shown in the control.
-  final NotificationMethod selected;
+  /// Initial [NotificationMethod] shown in the control.
+  final NotificationMethod initialMethod;
 
-  /// Callback invoked when the user selects a different [NotificationMethod].
-  final ValueChanged<NotificationMethod> onChanged;
+  @override
+  State<NotificationSelector> createState() => NotificationSelectorState();
+}
+
+/// State for [NotificationSelector].
+class NotificationSelectorState extends State<NotificationSelector> {
+  late NotificationMethod _selectedMethod;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedMethod = widget.initialMethod;
+  }
+
+  /// Returns the currently selected notification method.
+  NotificationMethod get selectedMethod => _selectedMethod;
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +53,10 @@ class NotificationSelector extends StatelessWidget {
               label: Text('SMS'),
             ),
           ],
-          selected: {selected},
-          onSelectionChanged: (value) => onChanged(value.first),
+          selected: {_selectedMethod},
+          onSelectionChanged: (value) {
+            setState(() => _selectedMethod = value.first);
+          },
           style: const ButtonStyle(
             visualDensity: VisualDensity.compact,
           ),

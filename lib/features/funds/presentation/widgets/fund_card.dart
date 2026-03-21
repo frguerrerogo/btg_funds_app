@@ -38,42 +38,70 @@ class FundCard extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: Text(
-                    fund.name,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        fund.name,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14,
+                        ),
+                      ),
                     ),
+                    _CategoryBadge(category: fund.category),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Monto mínimo: ${_formatCOP(fund.minimumAmount)}',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
                 ),
-                _CategoryBadge(category: fund.category),
               ],
             ),
-            const SizedBox(height: 8),
-            Text(
-              'Monto mínimo: ${_formatCOP(fund.minimumAmount)}',
-              style: TextStyle(
-                fontSize: 13,
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
+            Align(
+              child: SizedBox(
+                width: 130,
+                child: fund.isSubscribed
+                    ? OutlinedButton.icon(
+                        onPressed: onCancel,
+                        icon: const Icon(Icons.cancel_outlined, size: 18),
+                        label: const Text(
+                          'Cancelar',
+                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+                        ),
+                        style: OutlinedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                          side: BorderSide(
+                            color: Theme.of(context).colorScheme.error,
+                            width: 1.5,
+                          ),
+                          foregroundColor: Theme.of(context).colorScheme.error,
+                        ),
+                      )
+                    : ElevatedButton.icon(
+                        onPressed: onSubscribe,
+                        icon: const Icon(Icons.add, size: 18),
+                        label: const Text(
+                          'Suscribirse',
+                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                          backgroundColor: Theme.of(context).colorScheme.primary,
+                          foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                        ),
+                      ),
               ),
             ),
-            const SizedBox(height: 12),
-            if (fund.isSubscribed)
-              OutlinedButton.icon(
-                onPressed: onCancel,
-                icon: const Icon(Icons.cancel_outlined, size: 16),
-                label: const Text('Cancelar suscripción'),
-              )
-            else
-              ElevatedButton.icon(
-                onPressed: onSubscribe,
-                icon: const Icon(Icons.add, size: 16),
-                label: const Text('Suscribirse'),
-              ),
           ],
         ),
       ),

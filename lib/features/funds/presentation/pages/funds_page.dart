@@ -3,6 +3,7 @@ import 'package:btg_funds_app/core/core.dart'
         AppErrorBanner,
         LoadingWidget,
         NetworkException,
+        ResponsiveExtension,
         ServerException,
         SnackBarExtension,
         TimeoutException;
@@ -13,7 +14,13 @@ import 'package:btg_funds_app/features/funds/domain/domain.dart'
         InsufficientBalanceException,
         NotSubscribedException;
 import 'package:btg_funds_app/features/funds/presentation/presentation.dart'
-    show BalanceBanner, FundCard, FundsState, NotificationSelector, fundsControllerProvider;
+    show
+        BalanceBanner,
+        FundCard,
+        FundsState,
+        NotificationSelector,
+        NotificationSelectorState,
+        fundsControllerProvider;
 import 'package:btg_funds_app/features/transaction/domain/domain.dart' show NotificationMethod;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -31,9 +38,15 @@ class FundsPage extends ConsumerStatefulWidget {
 
 /// Manages the state and error handling for the funds browsing interface.
 class _FundsPageState extends ConsumerState<FundsPage> {
-  NotificationMethod _notificationMethod = NotificationMethod.email;
+  late NotificationMethod _notificationMethod;
   Object? _lastShownError;
   DateTime? _lastErrorTime;
+
+  @override
+  void initState() {
+    super.initState();
+    _notificationMethod = NotificationMethod.email;
+  }
 
   static const _errorDeduplicationWindow = Duration(milliseconds: 500);
 
@@ -78,7 +91,10 @@ class _FundsPageState extends ConsumerState<FundsPage> {
     final state = ref.watch(fundsControllerProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Fondos disponibles')),
+      appBar: AppBar(
+        title: const Text('Fondos disponibles'),
+        centerTitle: true,
+      ),
       body: state.when(
         loading: () => const LoadingWidget(),
         error: (error, _) => _buildErrorState(context, error),
@@ -104,52 +120,59 @@ class _FundsPageState extends ConsumerState<FundsPage> {
   Widget _buildContent(FundsState fundsState) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final isWide = constraints.maxWidth >= 600;
+        final horizontalPadding = constraints.responsiveHorizontalPadding;
+
         return CustomScrollView(
           slivers: [
-            SliverToBoxAdapter(
-              child: BalanceBanner(
-                balance: fundsState.user.balance,
-                subscribedCount: fundsState.user.activeSubscriptions.length,
+            SliverPadding(
+              padding: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: 16),
+              sliver: SliverToBoxAdapter(
+                child: BalanceBanner(
+                  balance: fundsState.user.balance,
+                  subscribedCount: fundsState.user.activeSubscriptions.length,
+                ),
               ),
             ),
             if (fundsState.funds.isEmpty)
-              const SliverFillRemaining(
-                child: Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.account_balance_outlined,
-                        size: 48,
-                        color: Colors.grey,
-                      ),
-                      SizedBox(height: 12),
-                      Text(
-                        'No hay fondos disponibles',
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                    ],
+              SliverFillRemaining(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+                  child: const Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.account_balance_outlined,
+                          size: 48,
+                          color: Colors.grey,
+                        ),
+                        SizedBox(height: 12),
+                        Text(
+                          'No hay fondos disponibles',
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               )
             else
               SliverPadding(
-                padding: const EdgeInsets.all(16),
-                sliver: SliverGrid(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: isWide ? 2 : 1,
-                    crossAxisSpacing: 12,
-                    mainAxisSpacing: 12,
-                    childAspectRatio: isWide ? 2.2 : 3.5,
-                  ),
+                padding: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: 16),
+                sliver: SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
                       final fund = fundsState.funds[index];
-                      return FundCard(
-                        fund: fund,
-                        onSubscribe: () => _onSubscribe(fund),
-                        onCancel: () => _onCancel(fund),
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 12),
+                        child: SizedBox(
+                          height: 160,
+                          child: FundCard(
+                            fund: fund,
+                            onSubscribe: () => _onSubscribe(fund),
+                            onCancel: () => _onCancel(fund),
+                          ),
+                        ),
                       );
                     },
                     childCount: fundsState.funds.length,
@@ -166,7 +189,7 @@ class _FundsPageState extends ConsumerState<FundsPage> {
     final confirmed = await _showSubscribeDialog(fund);
     if (!confirmed) return;
 
-    await ref
+    final success = await ref
         .read(fundsControllerProvider.notifier)
         .subscribeFund(
           fundId: fund.id,
@@ -175,7 +198,7 @@ class _FundsPageState extends ConsumerState<FundsPage> {
           notificationMethod: _notificationMethod,
         );
 
-    if (mounted && !ref.read(fundsControllerProvider).hasError) {
+    if (mounted && success) {
       context.showSuccessSnackBar('Suscripción a ${fund.name} exitosa');
     }
   }
@@ -184,7 +207,7 @@ class _FundsPageState extends ConsumerState<FundsPage> {
     final confirmed = await _showCancelDialog(fund);
     if (!confirmed) return;
 
-    await ref
+    final success = await ref
         .read(fundsControllerProvider.notifier)
         .cancelFund(
           fundId: fund.id,
@@ -193,42 +216,43 @@ class _FundsPageState extends ConsumerState<FundsPage> {
           notificationMethod: _notificationMethod,
         );
 
-    if (mounted && !ref.read(fundsControllerProvider).hasError) {
+    if (mounted && success) {
       context.showSuccessSnackBar('Cancelación de ${fund.name} exitosa');
     }
   }
 
   Future<bool> _showSubscribeDialog(FundEntity fund) async {
+    final selectorKey = GlobalKey<NotificationSelectorState>();
+
     return await showDialog<bool>(
           context: context,
-          builder: (context) => StatefulBuilder(
-            builder: (context, setState) => AlertDialog(
-              title: const Text('Confirmar suscripción'),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('¿Desea suscribirse a ${fund.name}?'),
-                  const SizedBox(height: 16),
-                  NotificationSelector(
-                    selected: _notificationMethod,
-                    onChanged: (method) {
-                      setState(() => _notificationMethod = method);
-                    },
-                  ),
-                ],
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context, false),
-                  child: const Text('Cancelar'),
-                ),
-                ElevatedButton(
-                  onPressed: () => Navigator.pop(context, true),
-                  child: const Text('Confirmar'),
+          builder: (context) => AlertDialog(
+            title: const Text('Confirmar suscripción'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('¿Desea suscribirse a ${fund.name}?'),
+                const SizedBox(height: 16),
+                NotificationSelector(
+                  key: selectorKey,
+                  initialMethod: _notificationMethod,
                 ),
               ],
             ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: const Text('Cancelar'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  _notificationMethod = selectorKey.currentState!.selectedMethod;
+                  Navigator.pop(context, true);
+                },
+                child: const Text('Confirmar'),
+              ),
+            ],
           ),
         ) ??
         false;

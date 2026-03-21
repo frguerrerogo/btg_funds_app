@@ -12,16 +12,16 @@
           "subscribed_at": "2026-03-20T23:41:19.842"
         },
         {
-          "fund_id": "2",
-          "fund_name": "FPV_BTG_PACTUAL_ECOPETROL",
-          "amount": 125000,
-          "subscribed_at": "2026-03-20T23:41:22.357"
-        },
-        {
           "fund_id": "5",
           "fund_name": "FPV_BTG_PACTUAL_DINAMICA",
           "amount": 100000,
           "subscribed_at": "2026-03-20T23:41:27.323"
+        },
+        {
+          "fund_id": "2",
+          "fund_name": "FPV_BTG_PACTUAL_ECOPETROL",
+          "amount": 125000,
+          "subscribed_at": "2026-03-21T01:57:45.475"
         }
       ]
     }
@@ -103,6 +103,24 @@
       "type": "subscription",
       "notification_method": "email",
       "created_at": "2026-03-20T23:41:27.374"
+    },
+    {
+      "id": "48cd6afd-6474-4c9e-8f92-344b78f451cd",
+      "fund_id": "2",
+      "fund_name": "FPV_BTG_PACTUAL_ECOPETROL",
+      "amount": 125000,
+      "type": "cancellation",
+      "notification_method": "email",
+      "created_at": "2026-03-21T01:57:30.565"
+    },
+    {
+      "id": "27a9c49e-c945-4268-b9a3-f7eca750149f",
+      "fund_id": "2",
+      "fund_name": "FPV_BTG_PACTUAL_ECOPETROL",
+      "amount": 125000,
+      "type": "subscription",
+      "notification_method": "email",
+      "created_at": "2026-03-21T01:57:45.511"
     }
   ]
 }

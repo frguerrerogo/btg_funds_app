@@ -80,13 +80,14 @@ class FundsController extends _$FundsController {
   /// Subscribes the user to a fund with the specified [fundId], [name], and [minimumAmount].
   /// Saves the subscription transaction and updates the fund subscription status.
   /// On business logic errors, restores the previous state while notifying listeners.
-  Future<void> subscribeFund({
+  /// Returns true if subscription was successful, false otherwise.
+  Future<bool> subscribeFund({
     required String fundId,
     required String name,
     required double minimumAmount,
     required NotificationMethod notificationMethod,
   }) async {
-    if (!ref.mounted) return;
+    if (!ref.mounted) return false;
 
     final currentState = await future;
 
@@ -123,19 +124,23 @@ class FundsController extends _$FundsController {
 
     if (state.hasError) {
       _handleFundOperationError(state.error, currentState);
+      return false;
     }
+
+    return true;
   }
 
   /// Cancels the user's subscription to the fund identified by [fundId].
   /// Saves the cancellation transaction and updates the fund subscription status.
   /// On business logic errors, restores the previous state while notifying listeners.
-  Future<void> cancelFund({
+  /// Returns true if cancellation was successful, false otherwise.
+  Future<bool> cancelFund({
     required String fundId,
     required String fundName,
     required double amount,
     required NotificationMethod notificationMethod,
   }) async {
-    if (!ref.mounted) return;
+    if (!ref.mounted) return false;
 
     final currentState = await future;
 
@@ -166,7 +171,10 @@ class FundsController extends _$FundsController {
 
     if (state.hasError) {
       _handleFundOperationError(state.error, currentState);
+      return false;
     }
+
+    return true;
   }
 
   /// Handles business logic exceptions by restoring the previous state to keep data visible.
